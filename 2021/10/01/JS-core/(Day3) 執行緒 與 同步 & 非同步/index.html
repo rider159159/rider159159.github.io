@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="JavaScript 是單執行緒的語言，而單執行緒的意思就是一次只做一件事情。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day3) 執行緒 與 同步 &amp; 非同步">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/01/JS-core/(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="JavaScript 是單執行緒的語言，而單執行緒的意思就是一次只做一件事情。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-01T06:22:41.000Z">
+<meta property="article:modified_time" content="2021-10-01T06:28:39.944Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/01/JS-core/(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&amp;%20%E9%9D%9E%E5%90%8C%E6%AD%A5&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day3) 執行緒 與 同步 &amp; 非同步&#x2F;&quot;,&quot;title&quot;:&quot;(Day3) 執行緒 與 同步 &amp; 非同步&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day3) 執行緒 與 同步 & 非同步 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%96%AE%E5%9F%B7%E8%A1%8C%E7%B7%92"><span class="nav-number">1.</span> <span class="nav-text">單執行緒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%90%8C%E6%AD%A5-Asynchronous"><span class="nav-number">2.</span> <span class="nav-text">非同步(Asynchronous)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0-event-loop"><span class="nav-number">3.</span> <span class="nav-text">事件循環 (event loop)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">4.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/01/JS-core/(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day3) 執行緒 與 同步 & 非同步
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-01 14:22:41 / 修改時間：14:28:39" itemprop="dateCreated datePublished" datetime="2021-10-01T14:22:41+08:00">2021-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/01/JS-core/(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/01/JS-core/(Day3) 執行緒 與 同步 & 非同步/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">JavaScript 是單執行緒的語言，而單執行緒的意思就是一次只做一件事情。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="單執行緒"><a href="#單執行緒" class="headerlink" title="單執行緒"></a>單執行緒</h2><p>JavaScript 是單執行緒的語言，而單執行緒的意思就是一次只做一件事情。</p>
+<p>不過這樣的話 單執行緒 的 JavaScript ， 一旦程式碼時遇到卡住的地方 (阻塞)，整個程式碼不就是應該卡住無法使用？</p>
+<p>就是為了解決這個問題， JS 中有部分方法是使用非同步來避免這件事。</p>
+<h2 id="非同步-Asynchronous"><a href="#非同步-Asynchronous" class="headerlink" title="非同步(Asynchronous)"></a>非同步(Asynchronous)</h2><p>什麼是非同步？</p>
+<p>先來說說什麼是同步(Synchronous)，同步的意思就是，當程式碼執行時他一定會依序做完才往下做，例如以下程式碼:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;我第一&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;我第二&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn3</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;我第三&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn1() </span><br><span class="line">Fn2() </span><br><span class="line">Fn3() </span><br></pre></td></tr></table></figure>
+
+<p>以上 console 顯示的一定會是按照順序顯示， 我第一 ⇒  我第二 ⇒ 我第三 ，這種會按照順序執行的程式碼部分就被稱做『同步』。</p>
+<p>理解好什麼是同步後，非同步自然比較好理解，自然就是同步的反義詞，不會依照順序執行，例如以下程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;我第一&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;我第二&#x27;</span>)</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn3</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;我第三&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn1()</span><br><span class="line">Fn2() </span><br><span class="line">Fn3() </span><br></pre></td></tr></table></figure>
+
+<p>這邊使用 setTimeout() 來模擬非同步語法，可發現顯示出來的順序會是， 我第一 ⇒ 我第三 ⇒ 我第二 ，之所以順序是這樣，是因為 JavaScript 有一個稱做 事件循環（event loop）的特性來處理非同步語法。</p>
+<p>JavaScript 中常見的非同步語法有：</p>
+<ul>
+<li>setTimeout() 及 setInterval() 定時器。 </li>
+<li>fetch 、 XMLHttpRequest 等等處理 Ajax 行為的語法。</li>
+<li>ES6 新增的 Promise 。</li>
+</ul>
+<h2 id="事件循環-event-loop"><a href="#事件循環-event-loop" class="headerlink" title="事件循環 (event loop)"></a>事件循環 (event loop)</h2><blockquote>
+<p>event loop 的作用是去監控堆疊（call stack）和工作佇列（task queue），當堆疊當中沒有執行項目的時候，便把佇列中的內容拉到堆疊中去執行。</p>
+</blockquote>
+<p>上面引用 pjchender 大大 文章中提到的一段話，這段話個人認為，確實是最好理解事件循環的一段話，在<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10258979/">(Day1)執行環境與執行堆疊</a>有提到，在函示中呼叫另一個函示會造成堆疊狀況（call stack），雖然稱做堆疊，但這種狀況其實是屬於同步的狀況。</p>
+<p>而工作佇列（task queue）則是 JavaScript 這語法專門存放非同步語法的地方。</p>
+<p>也就是說 事件循環 特性就是，非同步語法會等待 同步語法 執行完畢接著才被執行，這邊也使用一段程式碼查看這個特性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;非同步&#x27;</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(i)</span><br><span class="line">        &#125;)()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+
+<p>呼叫 <code>test()</code>  這個函示會在 console 依序顯示 1、2、3 …10 。<br>運行上面範例會是先顯示完 1、2、3 …10 ，最後才顯示 <strong>非同步</strong> 的字串，如果你覺得你的電腦夠好，也可以試者把  <code>for</code>  迴圈改成執行 10 萬次，結果也會是<strong>非同步</strong>字串最後才顯示。</p>
+<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2><ul>
+<li>JavaScript 核心篇 (六角學院）</li>
+<li><a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/javascript/20200531/3571534372/">JavaScript 核心觀念(9)-執行環境與作用域-執行緒與同步、非同步</a></li>
+<li><a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-event-loop-stack-queue/">[JS] 理解 JavaScript 中的事件循環、堆疊、佇列和併發模式（Learn event loop, stack, queue, and concurrency mode of JavaScript in depth）</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ&t=385s&ab_channel=JSConf">所以說event loop到底是什麼玩意兒？| Philip Roberts | JSConf EU</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/01/JS-core/(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/" rel="prev" title="(Day-02) 範圍鍊與提升">
+                  <i class="fa fa-chevron-left"></i> (Day-02) 範圍鍊與提升
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/01/JS-core/(Day4)%20%E9%99%B3%E8%BF%B0%E5%BC%8F&%E8%A1%A8%E9%81%94%E5%BC%8F/" rel="next" title="(Day4) 陳述式 /表達式">
+                  (Day4) 陳述式 /表達式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
