@@ -28,7 +28,7 @@
 <meta property="og:description" content="async&#x2F;await 是 Promise 的語法糖，最主要是提升了 Promise 在鏈式寫法的可讀性，而 async&#x2F;await 能辦到的 Promise 本身都能辦到，所以不少教學都提到要先明白 Promise ，才會看懂 async&#x2F;await 。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-03T05:09:46.000Z">
-<meta property="article:modified_time" content="2021-10-03T05:28:01.163Z">
+<meta property="article:modified_time" content="2021-10-03T05:54:20.394Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
@@ -141,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await-%E4%BB%8B%E7%B4%B9%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">async&#x2F;await 介紹：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try%E2%80%A6catch"><span class="nav-number">3.</span> <span class="nav-text">try…catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await-%E6%B7%B7%E6%90%AD-All-%E8%88%87-Race"><span class="nav-number">4.</span> <span class="nav-text">async&#x2F;await 混搭 All 與 Race</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">5.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await-%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">async&#x2F;await 介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try%E2%80%A6catch"><span class="nav-number">3.</span> <span class="nav-text">try…catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await-%E6%B7%B7%E6%90%AD-All-%E8%88%87-Race"><span class="nav-number">4.</span> <span class="nav-text">async&#x2F;await 混搭 All 與 Race</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">5.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -230,7 +230,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2021-10-03 13:09:46 / 修改時間：13:28:01" itemprop="dateCreated datePublished" datetime="2021-10-03T13:09:46+08:00">2021-10-03</time>
+      <time title="創建時間：2021-10-03 13:09:46 / 修改時間：13:54:20" itemprop="dateCreated datePublished" datetime="2021-10-03T13:09:46+08:00">2021-10-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>async/await</code> 是 <code>Promise</code> 的語法糖，最主要是提升了 <code>Promise</code> 在鏈式寫法的可讀性，而 <code>async/await</code> 能辦到的 <code>Promise</code> 本身都能辦到，所以不少教學都提到要先明白 <code>Promise</code> ，才會看懂 <code>async/await</code> 。</p>
-<h2 id="async-await-介紹："><a href="#async-await-介紹：" class="headerlink" title="async/await 介紹："></a>async/await 介紹：</h2><ul>
+<h2 id="async-await-介紹"><a href="#async-await-介紹" class="headerlink" title="async/await 介紹"></a>async/await 介紹</h2><ul>
 <li><p><code>async</code> 直接翻譯成中文是<strong>異步</strong>，也就是<strong>非同步</strong>的意思，若要使用 <code>async</code> 會將 <code>async</code> 放在函式旁，代表這個函式接下來會以同步方式來執行非同步的語法。</p>
 </li>
 <li><p><code>await</code> 翻譯成中文，則是<strong>等待</strong>， 一般是放在 <code>async</code> 函式中的 <code>Promise</code> 事件旁，代表接下來的程式碼會等待 <code>await</code> 方法完成後才執行。</p>

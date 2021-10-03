@@ -22,27 +22,27 @@
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
 <meta name="description" content="前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="(Day6) 強制轉型&amp;顯性轉型">
-<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/index.html">
+<meta property="og:title" content="(Day06) 強制轉型 &amp; 顯性轉型">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/index.html">
 <meta property="og:site_name" content="地方的工程師需要筆記">
 <meta property="og:description" content="前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-02T04:02:10.000Z">
-<meta property="article:modified_time" content="2021-10-03T05:31:00.646Z">
+<meta property="article:modified_time" content="2021-10-03T06:06:23.507Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
+<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&amp;%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06)-強制轉型&amp;顯性轉型&#x2F;&quot;,&quot;title&quot;:&quot;(Day6) 強制轉型&amp;顯性轉型&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&amp;%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06) 強制轉型 &amp; 顯性轉型&#x2F;&quot;,&quot;title&quot;:&quot;(Day06) 強制轉型 &amp; 顯性轉型&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>(Day6) 強制轉型&顯性轉型 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+<title>(Day06) 強制轉型 & 顯性轉型 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
   
 
 
@@ -205,7 +205,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
@@ -218,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          (Day6) 強制轉型&顯性轉型
+          (Day06) 強制轉型 & 顯性轉型
         </h1>
 
         <div class="post-meta-container">
@@ -236,7 +236,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-10-03 13:31:00" itemprop="dateModified" datetime="2021-10-03T13:31:00+08:00">2021-10-03</time>
+        <time title="修改時間：2021-10-03 14:06:23" itemprop="dateModified" datetime="2021-10-03T14:06:23+08:00">2021-10-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,8 +257,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day06)-強制轉型&顯性轉型/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/10/02/JS-core/(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day06) 強制轉型 & 顯性轉型/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -283,13 +283,13 @@
 <p>而這兩種術語並沒有特別明確的規範，他只是相對上的術語，因此有些狀況看起來是 ：似隱似顯的 但其實不用太糾結是分類在哪種，知道如何使用就沒有問題了，兩種轉型範例：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="string">&#x27;123&#x27;</span></span><br><span class="line">test1 = <span class="built_in">Number</span>(test1 )<span class="comment">//顯性轉型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test2 = <span class="number">456</span></span><br><span class="line">test2 = test2 + <span class="string">&#x27;1&#x27;</span> <span class="comment">//隱性轉型</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="顯性轉型"><a href="#顯性轉型" class="headerlink" title="顯性轉型"></a>顯性轉型</h2><p>在 『你不懂JS』一書中是將顯性轉型分成以下三種: </p>
+<h2 id="顯性轉型"><a href="#顯性轉型" class="headerlink" title="顯性轉型"></a>顯性轉型</h2><p>在 『你不懂 JS』一書中是將顯性轉型分成以下三種: </p>
 <ul>
 <li>顯性轉型 ： Strings &lt;–&gt; Numbers</li>
 <li>顯性轉型 ：数字字符串</li>
 <li>顯性轉型 ：Boolean</li>
 </ul>
-<p>『你不懂JS』一書這種分法確實比較全面，但對我們這些腦袋比較簡單的人來說，反而不好理解，這邊試者改成比較容易理解三種：</p>
+<p>『你不懂 JS』一書這種分法確實比較全面，但對我們這些腦袋比較簡單的人來說，反而不好理解，這邊試者改成比較容易理解三種：</p>
 <ul>
 <li>顯性轉型 ：轉成 String</li>
 <li>顯性轉型 ：轉成 Number</li>
@@ -328,7 +328,7 @@
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li>JavaScript 核心篇 (六角學院）</li>
 <li><a target="_blank" rel="noopener" href="https://cythilya.github.io/2018/10/15/coercion/#tonumber">你懂 JavaScript 嗎？#8 強制轉型（Coercion）</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/types%20%26%20grammar/ch4.md">你不懂JS：类型与文法</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/types%20%26%20grammar/ch4.md">你不懂 JS：类型与文法</a></li>
 </ul>
 
     </div>
@@ -347,13 +347,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day05)-%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8F%8A%E7%89%A9%E4%BB%B6%E5%9E%8B%E5%88%A5/" rel="prev" title="(Day5) 原始型別及物件型別">
-                  <i class="fa fa-chevron-left"></i> (Day5) 原始型別及物件型別
+                <a href="/2021/10/01/JS-core/(Day05)%20%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8F%8A%E7%89%A9%E4%BB%B6%E5%9E%8B%E5%88%A5/" rel="prev" title="(Day05) 原始型別及物件型別">
+                  <i class="fa fa-chevron-left"></i> (Day05) 原始型別及物件型別
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/02/JS-core/(Day07)%20%E9%9A%B1%E5%90%AB%E8%BD%89%E5%9E%8B-%E5%81%B7%E5%81%B7%E8%BD%89%E6%8F%9B%E7%9A%84%20Strings%20%E8%88%87%20Numbers%20%E9%A1%9E%E5%9E%8B/" rel="next" title="(Day7) 隱含轉型 - 偷偷轉換的 Strings 與 Numbers 類型">
-                  (Day7) 隱含轉型 - 偷偷轉換的 Strings 與 Numbers 類型 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/10/02/JS-core/(Day07)%20%E9%9A%B1%E5%90%AB%E8%BD%89%E5%9E%8B-%E5%81%B7%E5%81%B7%E8%BD%89%E6%8F%9B%E7%9A%84%20Strings%20%E8%88%87%20Numbers%20%E9%A1%9E%E5%9E%8B/" rel="next" title="(Day07) 隱含轉型-偷偷轉換的 Strings 與 Numbers 類型">
+                  (Day07) 隱含轉型-偷偷轉換的 Strings 與 Numbers 類型 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

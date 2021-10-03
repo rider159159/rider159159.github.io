@@ -22,14 +22,14 @@
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
 <meta name="description" content="在 JS 世界中執行環境是根據不同 function ，做區分的不同的函示，執行環境會是不同的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="(Day-01) 執行環境與執行堆疊">
+<meta property="og:title" content="(Day01) 執行環境與執行堆疊">
 <meta property="og:url" content="https://rider159159.github.io/2021/10/01/JS-core/(Day01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A/index.html">
 <meta property="og:site_name" content="地方的工程師需要筆記">
 <meta property="og:description" content="在 JS 世界中執行環境是根據不同 function ，做區分的不同的函示，執行環境會是不同的。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/UNo8DVC.gif">
 <meta property="article:published_time" content="2021-10-01T03:35:27.000Z">
-<meta property="article:modified_time" content="2021-10-03T05:39:56.461Z">
+<meta property="article:modified_time" content="2021-10-03T06:01:03.903Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day01) 執行環境與執行堆疊&#x2F;&quot;,&quot;title&quot;:&quot;(Day-01) 執行環境與執行堆疊&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day01) 執行環境與執行堆疊&#x2F;&quot;,&quot;title&quot;:&quot;(Day01) 執行環境與執行堆疊&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>(Day-01) 執行環境與執行堆疊 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+<title>(Day01) 執行環境與執行堆疊 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
   
 
 
@@ -220,7 +220,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          (Day-01) 執行環境與執行堆疊
+          (Day01) 執行環境與執行堆疊
         </h1>
 
         <div class="post-meta-container">
@@ -238,7 +238,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-10-03 13:39:56" itemprop="dateModified" datetime="2021-10-03T13:39:56+08:00">2021-10-03</time>
+        <time title="修改時間：2021-10-03 14:01:03" itemprop="dateModified" datetime="2021-10-03T14:01:03+08:00">2021-10-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -305,13 +305,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/" rel="prev" title="(Day-02) 範圍鍊與提升">
-                  <i class="fa fa-chevron-left"></i> (Day-02) 範圍鍊與提升
+                <a href="/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/" rel="prev" title="(Day02) 範圍鍊與提升">
+                  <i class="fa fa-chevron-left"></i> (Day02) 範圍鍊與提升
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day03)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/" rel="next" title="(Day3) 執行緒 與 同步 & 非同步">
-                  (Day3) 執行緒 與 同步 & 非同步 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/10/01/JS-core/(Day03)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/" rel="next" title="(Day03) 執行緒 與 同步 & 非同步">
+                  (Day03) 執行緒 與 同步 & 非同步 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
