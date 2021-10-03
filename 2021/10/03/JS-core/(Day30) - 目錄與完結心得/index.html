@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="目錄 (Day01) 執行環境與執行堆疊  (Day02) 範圍鍊與提升  (Day03) 執行緒 與 同步 &amp; 非同步  (Day04) 陳述式 &amp; 表達式   (Day05) 原始型別及物件型別   (Day06) 強制轉型 &amp; 顯性轉型  (Day07) 隱含轉型-偷偷轉換的 Strings 與 Numbers 類型  (Day08) 隱含轉型 - 轉成 Boolea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day30) - 目錄與完結心得">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="目錄 (Day01) 執行環境與執行堆疊  (Day02) 範圍鍊與提升  (Day03) 執行緒 與 同步 &amp; 非同步  (Day04) 陳述式 &amp; 表達式   (Day05) 原始型別及物件型別   (Day06) 強制轉型 &amp; 顯性轉型  (Day07) 隱含轉型-偷偷轉換的 Strings 與 Numbers 類型  (Day08) 隱含轉型 - 轉成 Boolea">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-03T08:20:25.000Z">
+<meta property="article:modified_time" content="2021-10-03T08:23:21.141Z">
+<meta property="article:author" content="Ryder">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day30) - 目錄與完結心得&#x2F;&quot;,&quot;title&quot;:&quot;(Day30) - 目錄與完結心得&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day30) - 目錄與完結心得 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E9%8C%84"><span class="nav-number">1.</span> <span class="nav-text">目錄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%AB%E9%80%99%E5%80%8B%E4%B8%BB%E9%A1%8C%E5%8B%95%E6%A9%9F"><span class="nav-number">3.</span> <span class="nav-text">寫這個主題動機</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%90%B5%E4%BA%BA%E8%B3%BD%E7%9A%84%E9%81%8E%E7%A8%8B%E4%B8%AD"><span class="nav-number">4.</span> <span class="nav-text">鐵人賽的過程中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E8%B3%BD%E5%BE%8C%E7%9A%84%E5%BF%83%E5%BE%97"><span class="nav-number">5.</span> <span class="nav-text">完賽後的心得</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day30) - 目錄與完結心得
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-03 16:20:25 / 修改時間：16:23:21" itemprop="dateCreated datePublished" datetime="2021-10-03T16:20:25+08:00">2021-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%90%B5%E4%BA%BA%E8%B3%BD%E5%BF%83%E5%BE%97/" itemprop="url" rel="index"><span itemprop="name">鐵人賽心得</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/03/JS-core/(Day30) - 目錄與完結心得/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="目錄"><a href="#目錄" class="headerlink" title="目錄"></a>目錄</h2><ul>
+<li><p><a href="https://rider159159.github.io/2021/10/01/JS-core/(Day01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A/">(Day01) 執行環境與執行堆疊</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/">(Day02) 範圍鍊與提升</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/01/JS-core/(Day03)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/">(Day03) 執行緒 與 同步 &amp; 非同步</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/01/JS-core/(Day04)%20%E9%99%B3%E8%BF%B0%E5%BC%8F&%E8%A1%A8%E9%81%94%E5%BC%8F/">(Day04) 陳述式 &amp; 表達式 </a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/01/JS-core/(Day05)%20%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8F%8A%E7%89%A9%E4%BB%B6%E5%9E%8B%E5%88%A5/">(Day05) 原始型別及物件型別 </a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)%20%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B%20&%20%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">(Day06) 強制轉型 &amp; 顯性轉型</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day07)%20%E9%9A%B1%E5%90%AB%E8%BD%89%E5%9E%8B-%E5%81%B7%E5%81%B7%E8%BD%89%E6%8F%9B%E7%9A%84%20Strings%20%E8%88%87%20Numbers%20%E9%A1%9E%E5%9E%8B/">(Day07) 隱含轉型-偷偷轉換的 Strings 與 Numbers 類型</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day08)%20%E9%9A%B1%E5%90%AB%E8%BD%89%E5%9E%8B%20-%20%E8%BD%89%E6%88%90%20Boolean%20&%20%E5%AF%AC%E9%AC%86%E7%9B%B8%E7%AD%89%20vs%20%E5%9A%B4%E6%A0%BC%E7%9B%B8%E7%AD%89/">(Day08) 隱含轉型 - 轉成 Boolean &amp; 寬鬆相等 vs 嚴格相等
+</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day09)%20%E9%81%8B%E7%AE%97%E5%AD%90%E4%B8%AD%E7%9A%84%E5%84%AA%E5%85%88%E6%80%A7%E5%8F%8A%E7%9B%B8%E4%BE%9D%E6%80%A7/">(Day09) 運算子中的優先性及相依性</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9">(Day10) 物件基礎介紹</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day11)%20%E7%89%A9%E4%BB%B6%E5%8F%83%E8%80%83%E7%89%B9%E6%80%A7">(Day11) 物件參考特性</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/">(Day12) 物件，淺拷貝/深拷貝</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/">(Day13) 函式基礎與參數介紹</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day14)%20%E9%96%89%E5%8C%85%20(Closure)%20%E4%BB%8B%E7%B4%B9/">(Day14) 閉包 (Closure) 介紹</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/02/JS-core/(Day15)%20%E9%96%89%E5%8C%85%E9%80%B2%E9%9A%8E%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%B7%A5%E5%BB%A0%E6%A8%A1%E5%BC%8F%E5%8F%8A%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95%E3%80%82/">(Day15) 閉包進階使用，工廠模式及私有方法</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91/">(Day-16) this 介紹上 - this 的指向</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day17)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8B%20-%20%E7%B6%81%E5%AE%9A%20this%20%20%E7%9A%84%20call%20&%20apply%20&%20bind%20%E8%88%87%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/">(Day17) this 介紹下 - 綁定 this 的 call/apply/bind 與嚴格模式</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day18)%20%E5%8E%9F%E5%9E%8B%E7%89%B9%E6%80%A7%E8%88%87%E7%B9%BC%E6%89%BF/">(Day18) 原型特性與繼承</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day19)%20%E5%8E%9F%E5%9E%8B%E8%88%87%E5%BB%BA%E6%A7%8B%E5%BC%8F/">(Day 19) 原型與建構式</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">(Day 20) Object.create 建立多層繼承</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day21)%20ES6%20class%20%E8%AA%9E%E6%B3%95%E7%B3%96/">(Day 21) ES6 class 語法糖</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day22)%20ES6%20%E7%9A%84%20let%20%E3%80%81const/">(Day 22) ES6 的 let 、const</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day23)%20ES6%20%E7%AE%AD%E9%A0%AD%E5%87%BD%E5%BC%8F/">(Day23) ES6 箭頭函式</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day24)%20%E8%99%95%E7%90%86%E9%9D%9E%E5%90%8C%E6%AD%A5%E7%9A%84%20Promise/">(Day24) 處理非同步的 Promise</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day25)%20Promise%20%E8%AA%9E%E6%B3%95%E7%B3%96%20async%20&%20await">(Day25) Promise 語法糖 async &amp; await</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day26)%20%E4%BD%BF%E7%94%A8%20fetch%20%E4%B8%B2%E6%8E%A5%20Ajax/">(Day26) 使用 fetch 串接 Ajax</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day27)%20ESM%20%E6%A8%A1%E7%B5%84%E5%8C%96%E6%8B%86%E6%AA%94/">(Day27) ESM 模組化拆檔</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day28)%20ES6%20%E5%B1%95%E9%96%8B%E9%81%8B%E7%AE%97%E5%AD%90%E8%88%87%E5%85%B6%E9%A4%98%E5%8F%83%E6%95%B8/">(Day28) ES6 展開運算子與其餘參數</a></p>
+</li>
+<li><p><a href="https://rider159159.github.io/2021/10/03/JS-core/(Day29)%20ES6%20-%20%E8%A7%A3%E6%A7%8B%E8%B3%A6%E5%80%BC/">(Day29) ES6 - 解構賦值</a></p>
+</li>
+</ul>
+<!-- - [(Day30) - 完結心得]() -->
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是本人第一次挑戰鐵人賽，雖然這篇幅水了不少文章，不過也終於讓我寫到完賽了 ✧<em>｡ ٩(ˊᗜˋ</em>)و✧*</p>
+<h2 id="寫這個主題動機"><a href="#寫這個主題動機" class="headerlink" title="寫這個主題動機"></a>寫這個主題動機</h2><p>因為 JavaScript  這語言奇耙特性出名的多，實做中絕對會因為不瞭解某些特性碰到相關 Bug，即使有上了相關課程，真正碰到 Bug 時變發現自己是一知半解狀況，因此便以核心為主題寫了鐵人賽。</p>
+<h2 id="鐵人賽的過程中"><a href="#鐵人賽的過程中" class="headerlink" title="鐵人賽的過程中"></a>鐵人賽的過程中</h2><p>由於沒有寫文章習慣，在本次鐵人賽主題又是 JavaScript 核心部分 ，要用文章介紹核心這種非實做章節，其時有些困難，因此碰到無從下手的主題時，都會先參考好友 <a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/">Ray Blog</a> 中的文章再來撰寫，不過每次透過這種方式撰寫，都會讓人猶豫再三，彷彿這種方法就不是自己寫的文章了，不過完賽後只會想說自己真是想太多了，與其想這種問題不如多寫幾篇文章 XD</p>
+<h2 id="完賽後的心得"><a href="#完賽後的心得" class="headerlink" title="完賽後的心得"></a>完賽後的心得</h2><p>完賽後最明顯的其實就是，原本一知半解的章節，寫完文章後再回過頭來看會清楚許多，還有比較明顯的就是再看前端面試考題時，雖然仍無法保證答的很好、或是回答正確（很多陷阱提真的坑），但在看這些面試問題時，可以更快理解他的問題點。 </p>
+<p>最後還是要感謝<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20119486/ironman/3917">好友 Ray</a>， 除了讓我大方開抄 Blog 的文章以外， 也有針對每個主題給予一些建議、參考讓我能夠順利完成本次鐵人賽。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/03/JS-core/(Day29)%20ES6%20-%20%E8%A7%A3%E6%A7%8B%E8%B3%A6%E5%80%BC/" rel="prev" title="(Day29) ES6 - 解構賦值">
+                  <i class="fa fa-chevron-left"></i> (Day29) ES6 - 解構賦值
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

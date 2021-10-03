@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/FlsSUrI.png">
 <meta property="article:published_time" content="2021-10-01T06:46:15.000Z">
-<meta property="article:modified_time" content="2021-10-03T06:03:39.012Z">
+<meta property="article:modified_time" content="2021-10-03T07:55:51.040Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
@@ -158,12 +158,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分類</span>
       </div>
       <div class="site-state-item site-state-tags">
@@ -238,7 +238,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-10-03 14:03:39" itemprop="dateModified" datetime="2021-10-03T14:03:39+08:00">2021-10-03</time>
+        <time title="修改時間：2021-10-03 15:55:51" itemprop="dateModified" datetime="2021-10-03T15:55:51+08:00">2021-10-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -308,7 +308,7 @@
 <h3 id="array"><a href="#array" class="headerlink" title="array"></a>array</h3><p>陣列也是屬於物件型別的一種，這邊使用上面提到的 <code>typeof()</code>  就能確認這點</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array =[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">typeof</span>(array ) <span class="comment">//object</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="函示"><a href="#函示" class="headerlink" title="函示"></a>函示</h3><p>函示也是物件型別的一種，使用 <code>typeof()</code> 他會回傳 “function” ，但函示其實是比較特別的物件，被稱做『函式物件 ( Function Object )』， 這點 MDN 文件也有提到：</p>
+<h3 id="函示"><a href="#函示" class="headerlink" title="函示"></a>函示</h3><p>函示也是物件型別的一種，使用 <code>typeof(function test())</code> 他會回傳 “function” ，但函示其實是比較特別的物件，被稱做『函式物件 ( Function Object )』， 這點 MDN 文件也有提到：</p>
 <blockquote>
 <p>Function 建構函式可建立一個新的 Function 物件。在 JavaScript 中，所有的函式實際上都是 Function 物件。</p>
 </blockquote>
