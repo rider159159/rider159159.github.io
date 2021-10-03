@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="不論是學習或是開發時，我們容易被 this 的指向搞的頭昏眼花，接下來會花兩個篇幅介紹 this 指向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day-16) this 介紹上 - this 的指向">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/03/JS-core/(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="不論是學習或是開發時，我們容易被 this 的指向搞的頭昏眼花，接下來會花兩個篇幅介紹 this 指向。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/3CjzoGq.png">
+<meta property="og:image" content="https://i.imgur.com/zpuw313.png">
+<meta property="og:image" content="https://i.imgur.com/3TugNpj.png">
+<meta property="og:image" content="https://i.imgur.com/su4rccp.png">
+<meta property="article:published_time" content="2021-10-03T04:18:08.000Z">
+<meta property="article:modified_time" content="2021-10-03T05:29:41.227Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/3CjzoGq.png">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/03/JS-core/(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day16) this 介紹上 - this 的指向&#x2F;&quot;,&quot;title&quot;:&quot;(Day-16) this 介紹上 - this 的指向&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day-16) this 介紹上 - this 的指向 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E6%98%93%E5%91%BC%E5%8F%AB-simple-call"><span class="nav-number">2.</span> <span class="nav-text">簡易呼叫 ( simple call)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E5%87%BD%E5%BC%8F%E5%91%BC%E5%8F%AB"><span class="nav-number">3.</span> <span class="nav-text">物件函式呼叫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addEventListener-%E7%9B%A3%E8%81%BD%E4%BA%8B%E4%BB%B6%E8%A7%B8%E7%99%BC%E7%9A%84%E5%87%BD%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">addEventListener() 監聽事件觸發的函式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E7%AF%84%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">延伸範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">6.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/03/JS-core/(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day-16) this 介紹上 - this 的指向
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-03 12:18:08 / 修改時間：13:29:41" itemprop="dateCreated datePublished" datetime="2021-10-03T12:18:08+08:00">2021-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/03/JS-core/(Day16)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8A%20-%20this%20%E7%9A%84%E6%8C%87%E5%90%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/03/JS-core/(Day16) this 介紹上 - this 的指向/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">不論是學習或是開發時，我們容易被 this 的指向搞的頭昏眼花，接下來會花兩個篇幅介紹 this 指向。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​<br>不論是學習或是開發時，我們容易被 this 的指向搞的頭昏眼花，接下來會花兩個篇幅介紹 this 指向。<br>​<br>也因為 this 容易把人搞亂這邊先列出影響 this 指向的方法：<br>​</p>
+<ul>
+<li>簡易呼叫 ( simple call)</li>
+<li>物件函式呼叫</li>
+<li>addEventListener() 監聽事件觸發的函式</li>
+<li>bind ﹑apply 、 call 綁定方法</li>
+<li>嚴格模式</li>
+<li>new 建構式</li>
+<li>箭頭函式<br>​<br>本章節會先介紹上面 簡易呼叫、物件函式呼叫 ，addEventListener() 監聽事件觸發的函式這三個。<br>​<br>bind ﹑apply 、 call 綁定方法、嚴格模式 下篇則會說明這兩組狀況，剩餘的 new 建構式 、箭頭函式 則會到他們各自章節介紹。<br>​<h2 id="簡易呼叫-simple-call"><a href="#簡易呼叫-simple-call" class="headerlink" title="簡易呼叫 ( simple call)"></a>簡易呼叫 ( simple call)</h2>​<br>先來看看指向全域的(window) 的 this 寫法:<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) </span><br><span class="line">&#125;</span><br><span class="line">showName()</span><br></pre></td></tr></table></figure>
+​<br>這邊直接使用  <code>showName()</code>  這種直接呼叫函式的方法，這種直接呼叫函式的方法我們稱做 簡易呼叫 ，只要是由簡易呼叫觸發的函式，他當中的 <code>this</code> 一律指向 <code>window</code> 。<br>​<br>可以看到範例中確實會顯示 <code>Ryder</code>  ，其實範例中 <code>this</code> 指向的是 <code>window</code> 。<br>​<br>順帶一題我們常用的 <code>forEach()</code> 、  <code>filter()</code>  中的 callback function ，他也是屬於 簡易呼叫 ，例如：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">array.forEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) <span class="comment">// Ryder * 3</span></span><br><span class="line">&#125;)</span><br><span class="line">​</span><br><span class="line">array.filter(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) <span class="comment">// Ryder * 3</span></span><br><span class="line">&#125;)</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+<h2 id="物件函式呼叫"><a href="#物件函式呼叫" class="headerlink" title="物件函式呼叫"></a>物件函式呼叫</h2>​<br>再來看看 <code>this</code> 指向物件的寫法：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="function"><span class="title">showName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) <span class="comment">// Jack</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">obj.showName()</span><br></pre></td></tr></table></figure>
+​<br>這個範例中 this 指向的是 <code>obj</code> 這個物件本身，關於物件函式的 <code>this</code> 指向有一個小撇步， this 指向的位置就是，呼叫函式 <code>xxx()</code> 的上一層物件 ，如圖：<br>​<br><img src="https://i.imgur.com/3CjzoGq.png"><br>​<br>在使用另一個多層物件來看看結果是否一致<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="attr">obj2</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">showName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.name) <span class="comment">//Alice</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj1.obj2.showName()</span><br></pre></td></tr></table></figure>
+​<br>在根據小撇步 <code>this</code> 會是 <code>showName()</code> 的上一層物件，圖片就會是<br><img src="https://i.imgur.com/zpuw313.png"><br>​<br>​<br>而答案也是正確的，範例中的 <code>this</code> 指向的會是 <code>obj2</code>  ，因此這個範例顯示 <code>&#39;Alice&#39;</code><br>​<h2 id="addEventListener-監聽事件觸發的函式"><a href="#addEventListener-監聽事件觸發的函式" class="headerlink" title="addEventListener() 監聽事件觸發的函式"></a>addEventListener() 監聽事件觸發的函式</h2>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">eventFn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>) <span class="comment">// DOM</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> box = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.box&#x27;</span>)</span><br><span class="line">box.addEventListener(<span class="string">&#x27;click&#x27;</span>, eventFn)</span><br></pre></td></tr></table></figure>
+​<br>當我們使用 <code>addEventListener</code> 配合 <code>click</code> 、<code>mouseover</code>  等等事件觸發的函式，他裡面的 <code>this</code>  會是指向觸發事件的 DOM 本身，比如這個範例的點擊 box 時， <code>this</code>  就會是 <code>class=&quot;box&quot;</code> 的 DOM 元素：<br>​<br><img src="https://i.imgur.com/3TugNpj.png"><br>​<br>但要注意的是，這個 DOM 指向是 <code>addEventListener()</code> 特有的， 我們如果改成早期的  <code>onclick</code> 寫法，則又會發現 this 指向的是 <code>window</code> (全域） 。<br>​<br>這個範例，完整程式碼可以參考 codepen :<a target="_blank" rel="noopener" href="https://codepen.io/rider159159/pen/JjJrgjK">https://codepen.io/rider159159/pen/JjJrgjK</a><br>​<h2 id="延伸範例"><a href="#延伸範例" class="headerlink" title="延伸範例"></a>延伸範例</h2>​<br>看到這裡你可能會想說 <code>this</code>  的指向好像並不困難，上述都是建立在程式碼拆開來說的情況，接下來就以上面觀念，舉出一些容易讓人覺的混亂例子，並且在一一說明。<br>​<br>範例一：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span> :<span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="function"><span class="title">showName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    name = <span class="string">&#x27;Alice&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">var</span> a = obj.showName</span><br><span class="line">a() </span><br></pre></td></tr></table></figure>
+​<br>結果會是 <code>Alice</code> 這是因為 <code>obj.showName</code>  賦值給變數 <code>a</code>  時，並沒有使用 <code>()</code> 呼叫 ，因此是將  <code>showName</code>  這個函式的整個內容，賦值到  <code>a</code>  變數上，接者呼叫 <code>a()</code> 來執行原本是 <code>showName</code> 函式中的語法，因此這邊 <code>a()</code> 是 簡易呼叫，所以 <code>this</code>  會指向 <code>window</code> 。<br>​<br>但是一執行  <code>a()</code> ，函式中 <code>name = &#39;Alice&#39;</code>  這段語法就會將全域 <code>name</code> 的值替換成 <code>Alice</code> ，可以在瀏覽器打上 <code>name</code>  來查看全域的 <code>name</code>  是否被替換。<br>​<br>範例二：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="function"><span class="title">showName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    name = <span class="string">&#x27;Alice&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">var</span> a = obj.showName()</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
+​<br>這個結果就會是 Jack ，雖然有把 <code>obj.showName()</code> 賦值到變數 a ，但這邊還是由 <code>obj.showName()</code>  來呼叫 <code>showName()</code>  函式，因此這個函式的狀況仍然如下圖，自然 this 的指向就會是 <code>obj</code><br><img src="https://i.imgur.com/su4rccp.png"><br>​<br>範例三：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">eventFn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">&#x27;Jack&#x27;</span></span><br><span class="line">  array.forEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.box&#x27;</span>)</span><br><span class="line">box.addEventListener(<span class="string">&#x27;click&#x27;</span>, eventFn)</span><br></pre></td></tr></table></figure>
+​<br>點擊 box 時會顯示？<br>​<br>結果會是顯示三次的  <code>Ryder</code> ，雖然 <code>eventFn</code> 是由事件觸發，但 <code>this</code> 所在的 <code>funciotn</code> 是 <code>forEach</code> 的 callback function ，而 callback function  也是屬於簡易呼叫的一種，因此 <code>this</code> 指向的是 window ，所以顯示全域的 <code>Ryder</code> 。<br>​<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2></li>
+<li>JavaScript 核心篇 (六角學院）<br>​</li>
+<li><a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/javascript/20210403/2190440925/">或許我從一開始就沒有很懂  this</a><br>​</li>
+<li><a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/javascript/20190418/1842588803/">關於this是一個很神奇的東西這件事情</a> </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day15)%20%E9%96%89%E5%8C%85%E9%80%B2%E9%9A%8E%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%B7%A5%E5%BB%A0%E6%A8%A1%E5%BC%8F%E5%8F%8A%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95%E3%80%82/" rel="prev" title="(Day15) 閉包進階使用，工廠模式及私有方法">
+                  <i class="fa fa-chevron-left"></i> (Day15) 閉包進階使用，工廠模式及私有方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/03/JS-core/(Day17)%20this%20%E4%BB%8B%E7%B4%B9%E4%B8%8B%20-%20%E7%B6%81%E5%AE%9A%20this%20%20%E7%9A%84%20call%20&%20apply%20&%20bind%20%E8%88%87%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/" rel="next" title="(Day17) this 介紹下 - 綁定 this  的 call/apply/bind 與嚴格模式">
+                  (Day17) this 介紹下 - 綁定 this  的 call/apply/bind 與嚴格模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

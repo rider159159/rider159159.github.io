@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="實作很常會遇到要讓物件複製出來，個別使用的狀況，在 JavaScript 物件複製分成兩種：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day12) 物件，淺拷貝&#x2F;深拷貝">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="實作很常會遇到要讓物件複製出來，個別使用的狀況，在 JavaScript 物件複製分成兩種：">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-02T04:53:57.000Z">
+<meta property="article:modified_time" content="2021-10-02T05:20:02.604Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&amp;%E6%B7%B1%E6%8B%B7%E8%B2%9D&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day12) 物件，淺拷貝&amp;深拷貝&#x2F;&quot;,&quot;title&quot;:&quot;(Day12) 物件，淺拷貝&#x2F;深拷貝&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day12) 物件，淺拷貝/深拷貝 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BA%E6%8B%B7%E8%B2%9D-shallow-copy"><span class="nav-number">2.</span> <span class="nav-text">淺拷貝(shallow copy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B2%9D-deep-copy"><span class="nav-number">3.</span> <span class="nav-text">深拷貝(deep copy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day12) 物件，淺拷貝/深拷貝
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-02 12:53:57 / 修改時間：13:20:02" itemprop="dateCreated datePublished" datetime="2021-10-02T12:53:57+08:00">2021-10-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day12) 物件，淺拷貝&深拷貝/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">實作很常會遇到要讓物件複製出來，個別使用的狀況，在 JavaScript 物件複製分成兩種：</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>實作很常會遇到要讓物件複製出來，個別使用的狀況，在 JavaScript 物件複製分成兩種：</p>
+<ul>
+<li>淺拷貝</li>
+<li>深拷貝</li>
+</ul>
+<h2 id="淺拷貝-shallow-copy"><a href="#淺拷貝-shallow-copy" class="headerlink" title="淺拷貝(shallow copy)"></a>淺拷貝(shallow copy)</h2><p>這邊先來看看淺拷貝的範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSchool = <span class="built_in">Object</span>.assign(&#123;&#125;, school)</span><br></pre></td></tr></table></figure>
+
+<p>這樣就是典型的淺拷貝，接者修改 <code>newSchool</code> 的 <code>name</code> 屬性看看：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSchool = <span class="built_in">Object</span>.assign(&#123;&#125;, school)</span><br><span class="line">newSchool.name = <span class="string">&#x27;Taoyuan University&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school.name , newSchool.name)<span class="comment">// &#x27;Taipei University&#x27; , &#x27;Taoyuan University&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以發現 <code>newSchool</code>  的 <code>name</code> 確實獨立被修改了，不過要注意的是，這種淺拷貝方法只會對物件第一層的屬性生效，在第二層之下的仍然是上篇文章介紹的傳參考特性，這邊來看看修改第二層的範例： </p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSchool = <span class="built_in">Object</span>.assign(&#123;&#125;, school)</span><br><span class="line">newSchool.classes.teacher = <span class="string">&#x27;Mary&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school.classes.teacher, newSchool.classes.teacher) <span class="comment">// &#x27;Mary&#x27;, &#x27;Mary&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以發現第二層以下的屬性，兩個物件仍會按照傳參考特性一同被修改。</p>
+<p>在原生 JS 中淺拷貝方法較多，其他還有:</p>
+<ul>
+<li>使用物件展開方法：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> newSchool = &#123; ...school &#125;</span><br><span class="line">newSchool.classes.teacher = <span class="string">&#x27;Mary&#x27;</span></span><br><span class="line">newSchool.name = <span class="string">&#x27;Taoyuan University&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school.name , school.classes.teacher) <span class="comment">//Taipei University Mary</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for … in 方法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSchool = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> school )&#123;</span><br><span class="line">newSchool[key] = school[key]</span><br><span class="line">&#125;</span><br><span class="line">newSchool.classes.teacher = <span class="string">&#x27;Mary&#x27;</span></span><br><span class="line">newSchool.name = <span class="string">&#x27;Taoyuan University&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school.name , school.classes.teacher) <span class="comment">//Taipei University Mary</span></span><br></pre></td></tr></table></figure>
+
+<p>不過實做中這種傳參考特性，有時反而達不到需求，這個時候就會想問了，JavaScript 中有沒有什麼方法，能複製兩個指向完全不同的物件？</p>
+<p>而深拷貝就是能將物件記憶體指向完全分開的方法。</p>
+<h2 id="深拷貝-deep-copy"><a href="#深拷貝-deep-copy" class="headerlink" title="深拷貝(deep copy)"></a>深拷貝(deep copy)</h2><p>和淺拷貝不同，能夠做到深拷貝的功能，在原生 JavaScript 中只有一種寫法，如範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,  </span><br><span class="line">	<span class="attr">classes</span>: &#123; </span><br><span class="line">		<span class="attr">teacher</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>]</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSchool = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(school ))</span><br><span class="line">newSchool.classes.teacher = <span class="string">&#x27;Mary&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log( school.classes.teacher, newSchool.classes.teacher) <span class="comment">//Alex, Mary</span></span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>JSON.stringify()</code>  其實就會明白，這個方法是先透過 <code>JSON.stringify()</code> 將物件轉成字串，再使用 <code>JSON.parse()</code> 將字串轉成物件，由於有先轉成字串因此兩個物件的記憶體是完全分開的。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>JavaScript 核心篇 (六角學院）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day11)%20%E7%89%A9%E4%BB%B6%E5%8F%83%E8%80%83%E7%89%B9%E6%80%A7/" rel="prev" title="(Day11) 物件參考特性">
+                  <i class="fa fa-chevron-left"></i> (Day11) 物件參考特性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/" rel="next" title="(Day13) 函式基礎與參數介紹">
+                  (Day13) 函式基礎與參數介紹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

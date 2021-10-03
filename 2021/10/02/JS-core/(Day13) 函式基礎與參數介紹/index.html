@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="函式在即使非 JavaScript  的程式語言中是非常重要的一塊，我們會根據需求在函式中建立一系列動作，需要的時候便接呼叫對應函式，不管需求是執行 Ajax API ，或是隱藏、顯示畫面中某某區塊，都會將這些需求寫在函式中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day13) 函式基礎與參數介紹">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="函式在即使非 JavaScript  的程式語言中是非常重要的一塊，我們會根據需求在函式中建立一系列動作，需要的時候便接呼叫對應函式，不管需求是執行 Ajax API ，或是隱藏、顯示畫面中某某區塊，都會將這些需求寫在函式中。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/YkWvvEn.png">
+<meta property="og:image" content="https://i.imgur.com/vBl8Yrb.png">
+<meta property="article:published_time" content="2021-10-02T05:10:00.000Z">
+<meta property="article:modified_time" content="2021-10-02T05:20:02.926Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/YkWvvEn.png">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day13) 函式基礎與參數介紹&#x2F;&quot;,&quot;title&quot;:&quot;(Day13) 函式基礎與參數介紹&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day13) 函式基礎與參數介紹 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BC%E5%8F%AB%E5%87%BD%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">呼叫函式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arguments"><span class="nav-number">3.</span> <span class="nav-text">arguments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E6%95%B8%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">4.</span> <span class="nav-text">參數作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-%E9%A0%90%E8%A8%AD%E5%8F%83%E6%95%B8"><span class="nav-number">5.</span> <span class="nav-text">ES6 預設參數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E6%95%B8%E8%88%87%E7%89%A9%E4%BB%B6%E5%82%B3%E5%8F%83%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">參數與物件傳參考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E5%88%86%E9%A1%9E"><span class="nav-number">7.</span> <span class="nav-text">函式分類</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">8.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day13) 函式基礎與參數介紹
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-02 13:10:00 / 修改時間：13:20:02" itemprop="dateCreated datePublished" datetime="2021-10-02T13:10:00+08:00">2021-10-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/02/JS-core/(Day13)%20%E5%87%BD%E5%BC%8F%E5%9F%BA%E7%A4%8E%E8%88%87%E5%8F%83%E6%95%B8%E4%BB%8B%E7%B4%B9/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day13) 函式基礎與參數介紹/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">函式在即使非 JavaScript  的程式語言中是非常重要的一塊，我們會根據需求在函式中建立一系列動作，需要的時候便接呼叫對應函式，不管需求是執行 Ajax API ，或是隱藏、顯示畫面中某某區塊，都會將這些需求寫在函式中。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>函式在即使非 JavaScript  的程式語言中是非常重要的一塊，我們會根據需求在函式中建立一系列動作，需要的時候便接呼叫對應函式，不管需求是執行 Ajax API ，或是隱藏、顯示畫面中某某區塊，都會將這些需求寫在函式中。<br>​</p>
+<h2 id="呼叫函式"><a href="#呼叫函式" class="headerlink" title="呼叫函式"></a>呼叫函式</h2><p>​<br>呼叫函式的方法，使用函式名稱搭配小刮號 <code>()</code><br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;一般函式&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn1()</span><br></pre></td></tr></table></figure>
+<p>​<br>也可以在小刮號中寫入參數，參數會帶到函式中，而函式的參數只跟在函式中建立的變數一樣，他的作用域只存在於函式中。<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(num) <span class="comment">//1</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(num) <span class="comment">//num </span></span><br></pre></td></tr></table></figure>
+<p>​<br>實做中常常看到在函式  <code>return</code>  某個值，而其實 <code>return</code> 的值會直接回傳在呼叫函式的方法中，這種方法常用在會要執行某些重複動作的需求上。<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sum = num + <span class="number">10</span></span><br><span class="line">    <span class="keyword">return</span> sum </span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="built_in">console</span>.log(Fn1(<span class="number">1</span>) , Fn1(<span class="number">2</span>)) <span class="comment">//11, 12</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+<h2 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h2><p>​<br>上面有介紹到函式帶參數功能，關於參數也有一個特別的功能，就是 <code>arguments</code> 。<br>​<br> <code>arguments</code>  這個語法在函式建立時，他也會被一同建立，即使我們不需告變數、參數他也會存在於函式中，而  <code>arguments</code>  其實就是我們呼叫函式時，所有參數組和而成的 <strong>類陣列。</strong><br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>) <span class="comment">//Arguments(3) [1, 2, 3, .... ]</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>​<br>什麼是類陣列呢？簡單來講就是一個類似陣列但不是陣列的東西，但是類陣列與陣列最大差異在於可以<strong>使用的方法</strong> or <strong>功能</strong>會有很大差異，因此我們來看一下範例：<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.dir(a);</span><br></pre></td></tr></table></figure>
+<p>​<br>點開變數 <code>a</code> 中的 <code>[[Prototype]]</code>  底下都會是陣列中的方法（太長因此不全部截圖）：<br><img src="https://i.imgur.com/YkWvvEn.png"><br>​<br>而 <code>arguments</code>  中的 <code>[[Prototype]]</code>  就只有：<br><img src="https://i.imgur.com/vBl8Yrb.png"><br>可以看的出來類陣列和原始陣列中的方法相差十分多。<br>​</p>
+<h2 id="參數作用域"><a href="#參數作用域" class="headerlink" title="參數作用域"></a>參數作用域</h2><p>​<br>當我們參數名稱和函式外層變數相同時，看看花生神魔術<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name =<span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name) <span class="comment">// Jack</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(<span class="string">&#x27;Jack&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>​<br>結果會是以傳入參數為準。<br>那麼看看對參數使用 <code>=</code>  運算子賦予一個新的值看看結果如何：<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    name = <span class="string">&#x27;Annie&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(name) <span class="comment">// Annie</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(<span class="string">&#x27;Jack&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>​<br>結果會發現參數的值確實可以更改，其實參數跟函式中變數的範圍練特性是差不多的，當內層有該參數時，就會優先指向內層參數。<br>​</p>
+<h2 id="ES6-預設參數"><a href="#ES6-預設參數" class="headerlink" title="ES6 預設參數"></a>ES6 預設參數</h2><p>​<br>在 ES6 語法中有新增一個預設參數方法，只需在參數旁邊使用 <code>=</code> 運算子賦值，之後呼叫函式時，若沒帶上參數，到了函式中參數便會套上預設的值，但如果呼叫函式時，有帶上參數，便還是以帶上的參數為主，是一個十分方變的功能:<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">name = <span class="string">&#x27;Annie&#x27;</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Fn1()) <span class="comment">//Annie</span></span><br><span class="line"><span class="built_in">console</span>.log(Fn1(<span class="string">&#x27;Jack&#x27;</span>)) <span class="comment">//Jack</span></span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<h2 id="參數與物件傳參考"><a href="#參數與物件傳參考" class="headerlink" title="參數與物件傳參考"></a>參數與物件傳參考</h2><p>​<br>先前也有介紹到物件傳參考這個特性，當我們物件傳入參數時，他也會是傳參考， :<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123; <span class="attr">name</span>:<span class="string">&#x27;Ryder&#x27;</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    item.name = <span class="string">&#x27;Annie&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(item.name, obj1.name) <span class="comment">// Annie , Annie</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(obj1 )</span><br></pre></td></tr></table></figure>
+<p>範例中兩個物件的 <code>name</code> 屬性的值也都會改成 <code>&#39;Annie&#39;</code> 。<br>不過當我們只是傳入物件中的屬性時，結果並非是傳參考，而僅僅是傳值<br>​</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123; <span class="attr">name</span>:<span class="string">&#x27;Ryder&#x27;</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    item = <span class="string">&#x27;Annie&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(item, obj1.name) <span class="comment">// Annie , Ryder</span></span><br><span class="line">&#125;</span><br><span class="line">Fn1(obj1.name)</span><br></pre></td></tr></table></figure>
+<p>​<br>因此有使用 ES Lint 時，如果有試者修改參數的值，他都會跳出請不要直接修改參數的相關警告，這點就是避免物件傳參考特性發生錯誤。<br>​</p>
+<h2 id="函式分類"><a href="#函式分類" class="headerlink" title="函式分類"></a>函式分類</h2><p>​<br>最後來說說函式的分類，在先前 陳述式 /表達式 中有根據建立方法不同，將函式分成：<br>​</p>
+<ul>
+<li>函示陳述式(具名函式)</li>
+<li>函式表達式(匿名函式)<br>​<br>但這其實是根據這段語法是表達式、陳述式來做區分，或者說函式有沒有名字來做分類的，在 ES6 新增箭頭函式後，一般會把函式分成三種：<br>​</li>
+<li>一般傳統函式（又可分為 具名函式、匿名函式）<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;傳統具名&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn1() </span><br><span class="line">​</span><br><span class="line"><span class="keyword">var</span> Fn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;傳統匿名&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn2()</span><br></pre></td></tr></table></figure>
+​</li>
+<li>立即函式（IIFE），一般都是以 匿名函式 寫成，雖然也可寫成具名函式，不過這種寫法很少看到：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;立即函式&#x27;</span>)</span><br><span class="line">&#125;)() </span><br></pre></td></tr></table></figure>
+​</li>
+<li>ES6 新增的箭頭函式，箭頭函式一律都是匿名函式，設計上就無法使用具名函式寫成：<br>​<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Fn3 = <span class="function">()=&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;箭頭函式&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">Fn3()</span><br></pre></td></tr></table></figure>
+​<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2>​</li>
+<li>JavaScript 核心篇 (六角學院）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day12)%20%E7%89%A9%E4%BB%B6%EF%BC%8C%E6%B7%BA%E6%8B%B7%E8%B2%9D&%E6%B7%B1%E6%8B%B7%E8%B2%9D/" rel="prev" title="(Day12) 物件，淺拷貝/深拷貝">
+                  <i class="fa fa-chevron-left"></i> (Day12) 物件，淺拷貝/深拷貝
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day14)%20%E9%96%89%E5%8C%85%20(Closure)%20%E4%BB%8B%E7%B4%B9/" rel="next" title="(Day14) 閉包 (Closure) 介紹">
+                  (Day14) 閉包 (Closure) 介紹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

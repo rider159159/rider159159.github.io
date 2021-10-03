@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="上回介紹了如何使用建構式來建立原型，接著今天介紹使用 Object.create() 建立多層原型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day 20) Object.create 建立多層繼承">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="上回介紹了如何使用建構式來建立原型，接著今天介紹使用 Object.create() 建立多層原型。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/weK2krQ.png">
+<meta property="og:image" content="https://i.imgur.com/H4mmY75.png">
+<meta property="og:image" content="https://i.imgur.com/92O8I9K.png">
+<meta property="og:image" content="https://i.imgur.com/zPPoKba.png">
+<meta property="article:published_time" content="2021-10-03T04:48:49.000Z">
+<meta property="article:modified_time" content="2021-10-03T05:30:22.993Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/weK2krQ.png">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;03&#x2F;JS-core&#x2F;(Day20) Object.create 建立多層繼承&#x2F;&quot;,&quot;title&quot;:&quot;(Day 20) Object.create 建立多層繼承&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day 20) Object.create 建立多層繼承 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Object-create"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Object.create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%8F%E9%81%8E-Object-create-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E5%8E%9F%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">透過 Object.create() 建立多層原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF%E4%B8%AD%E7%9A%84%E7%9C%89%E7%9C%89%E8%A7%92%E8%A7%92"><span class="nav-number">4.</span> <span class="nav-text">多層繼承中的眉眉角角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">5.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day 20) Object.create 建立多層繼承
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-03 12:48:49 / 修改時間：13:30:22" itemprop="dateCreated datePublished" datetime="2021-10-03T12:48:49+08:00">2021-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/03/JS-core/(Day20) Object.create 建立多層繼承/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">上回介紹了如何使用建構式來建立原型，接著今天介紹使用 Object.create() 建立多層原型。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上回介紹了如何使用建構式來建立原型，接著今天介紹使用  <code>Object.create()</code> 建立多層原型，先前在 T Shirt 例子有提到 ， T Shirt 的原型是衣服，而衣服原型，仍然能有原型，這種多層原型就會使用 <code>Object.create()</code>  這個方法。  </p>
+<p><img src="https://i.imgur.com/weK2krQ.png"></p>
+<h2 id="什麼是-Object-create"><a href="#什麼是-Object-create" class="headerlink" title="什麼是 Object.create()"></a>什麼是 Object.create()</h2><p><code>Object.create()</code> 這個功能簡單來說就是，建立一個新的原型物件，而這個原型物件是沒有實體的，這邊使用範例來觀察</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Ryder = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Ryder&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> student = <span class="built_in">Object</span>.create(Ryder)</span><br><span class="line"><span class="built_in">console</span>.log(student) <span class="comment">//&#123;&#125;</span></span><br><span class="line">student.name <span class="comment">// Ryder</span></span><br></pre></td></tr></table></figure>
+
+<p> 雖然 <code>student</code> 實體仍是空物件，但我們使用 <code>student.name</code>  可以看到他會回傳 Ryder</p>
+<p><img src="https://i.imgur.com/H4mmY75.png"></p>
+<p>這是因為 <code>Object.create()</code> 的功能，讓 <code>student</code> 的原型繼承  <code>Ryder</code> 的內容 ，可以點開 <code>student</code>  回傳的空物件，看看他 <code>[[Prototype]]</code> 的結構：</p>
+<p><img src="https://i.imgur.com/92O8I9K.png"></p>
+<p>這樣便清楚 <code>Object.create()</code>  的功能其實就是能夠讓參數中的內容，成為目標的原型。</p>
+<h2 id="透過-Object-create-建立多層原型"><a href="#透過-Object-create-建立多層原型" class="headerlink" title="透過 Object.create() 建立多層原型"></a>透過 Object.create() 建立多層原型</h2><p>這邊複製之前的 <code>TShirt</code> 程式碼</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TShirt</span>(<span class="params">color,material,size</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.color = color</span><br><span class="line">	<span class="built_in">this</span>.material = material</span><br><span class="line">	<span class="built_in">this</span>.size = size</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TShirt.prototype.clothe = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`穿上 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> T Shit`</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> BlackTShit = <span class="keyword">new</span> TShirt(<span class="string">&#x27;black&#x27;</span>,<span class="string">&#x27;棉&#x27;</span>,<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>目前是的原型鍊是</p>
+<p>BlackTShit (子層） ⇒ TShirt （父層） </p>
+<p>預期在 TShirt 上一層在新增一層 <code>apparel</code>  原型，也就是讓原型鍊變成</p>
+<p>BlackTShit ⇒ TShirt ⇒ apparel (服飾）</p>
+<p>接下來就是新增 <code>apparel</code> 原型，並使用剛剛介紹的 <code>Object.create()</code> ， 讓 <code>apparel</code> 成為 <code>TShirt</code> 的原型，以下是範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新的一層原型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">apparel</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.type = type || <span class="string">&#x27;T Shirt&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 為新原型新增方法</span></span><br><span class="line">apparel.prototype.mirror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">`我穿著 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> 的 <span class="subst">$&#123;<span class="built_in">this</span>.type&#125;</span> `</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TShirt</span>(<span class="params">color,material,size</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.color = color</span><br><span class="line">	<span class="built_in">this</span>.material = material</span><br><span class="line">	<span class="built_in">this</span>.size = size</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 Object.create 讓 TShirt 原型繼承 apparel 原型</span></span><br><span class="line">TShirt.prototype = <span class="built_in">Object</span>.create(apparel.prototype)</span><br><span class="line"></span><br><span class="line">TShirt.prototype.clothe = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`穿上 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> T Shit`</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> BlackTShit = <span class="keyword">new</span> TShirt(<span class="string">&#x27;black&#x27;</span>,<span class="string">&#x27;棉&#x27;</span>,<span class="string">&#x27;L&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在這段範例中要特別注意的是這一段：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TShirt.prototype = <span class="built_in">Object</span>.create(apparel.prototype)</span><br></pre></td></tr></table></figure>
+
+<p>這邊是讓 <code>TShirt</code> 這個函式建構式的原型，繼承了 <code>apparel</code> 函式就建構式的原型。</p>
+<h2 id="多層繼承中的眉眉角角"><a href="#多層繼承中的眉眉角角" class="headerlink" title="多層繼承中的眉眉角角"></a>多層繼承中的眉眉角角</h2><p>在完成上面使用 <code>Object.create()</code> 串連原型後，接著試者使用 <code>mirror()</code> 以及 <code>clothe()</code> 方法。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BlackTShit.clothe() <span class="comment">//穿上 black T Shit</span></span><br><span class="line">BlackTShit.mirror() <span class="comment">//我穿著 black 的 undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>可以發現在 <code>apparel</code>  這一層原型新增的方法雖然成功了， <code>mirror()</code> 方法中的 <code>type</code> 屬性卻無法正確顯示，這是因為使用 <code>Object.create()</code> 讓 <code>TShirt</code> 繼承了 <code>apparel</code>  的原型，但卻沒有繼承 <code>apparel</code> 的『建構函式』。<br>這時候需要在 <code>TShirt</code>  建構函式中使用 <code>call()</code> 方法，來讓 <code>TShirt</code> 中的 <code>this</code> 綁定到 <code>apparel</code> 上，而這段其實就是將兩個 建構函式 串接起來，並在傳入 <code>&#39;T Shirt&#39;</code> 字串當作 <code>apparel</code> 的 <code>type</code> 參數。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">apparel</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.type = type || <span class="string">&#x27;帽 T&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">apparel.prototype.mirror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`我穿著 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> 的 <span class="subst">$&#123;<span class="built_in">this</span>.type&#125;</span> `</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TShirt</span>(<span class="params">color,material,size</span>)</span>&#123;</span><br><span class="line">  apparel.call(<span class="built_in">this</span>, <span class="string">&#x27;T Shirt&#x27;</span>)</span><br><span class="line">  <span class="built_in">this</span>.color = color</span><br><span class="line">  <span class="built_in">this</span>.material = material</span><br><span class="line">  <span class="built_in">this</span>.size = size</span><br><span class="line">&#125;</span><br><span class="line">TShirt.prototype = <span class="built_in">Object</span>.create(apparel.prototype)</span><br><span class="line">TShirt.prototype.constructor = TShirt</span><br><span class="line">TShirt.prototype.clothe = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`穿上 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> T Shit`</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> BlackTShit = <span class="keyword">new</span> TShirt(<span class="string">&#x27;black&#x27;</span>,<span class="string">&#x27;棉&#x27;</span>,<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line">BlackTShit.mirror()</span><br><span class="line">BlackTShit.clothe()</span><br></pre></td></tr></table></figure>
+
+<p> 這樣在 console 打上  <code>BlackTShit</code> 便會看到，來自 <code>TShirt</code> 原型 、<code>apparel</code> 原型上的完整屬性以及內容了。<br><img src="https://i.imgur.com/zPPoKba.png"></p>
+<p>最後這邊看起來程式碼已經相當的完整了，但是如果要讓原型鍊完整的話，其實還必須在 <code>Object.create()</code> 底下加上 <code>TShirt.prototype.constructor = TShirt</code> ，這是因為在 <code>Object.create()</code> 設定時就會將原本 <code>TShirt</code>  原型中的內容在加回來。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">apparel</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.type = type || <span class="string">&#x27;帽 T&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 為新原型新增方法</span></span><br><span class="line">apparel.prototype.mirror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">`我穿著 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> 的 <span class="subst">$&#123;<span class="built_in">this</span>.type&#125;</span> `</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TShirt</span>(<span class="params">color,material,size</span>)</span>&#123;</span><br><span class="line">	apparel.call(<span class="built_in">this</span>, <span class="string">&#x27;T Shirt&#x27;</span>)</span><br><span class="line">  <span class="built_in">this</span>.color = color</span><br><span class="line">	<span class="built_in">this</span>.material = material</span><br><span class="line">	<span class="built_in">this</span>.size = size</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 透過 Object.create() 為 TShirt  </span></span><br><span class="line">TShirt.prototype = <span class="built_in">Object</span>.create(apparel.prototype)</span><br><span class="line">TShirt.prototype.constructor = TShirt</span><br><span class="line"></span><br><span class="line">TShirt.prototype.clothe = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`穿上 <span class="subst">$&#123;<span class="built_in">this</span>.color&#125;</span> T Shit`</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> BlackTShit = <span class="keyword">new</span> TShirt(<span class="string">&#x27;black&#x27;</span>,<span class="string">&#x27;棉&#x27;</span>,<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line">BlackTShit.mirror()</span><br><span class="line">BlackTShit.clothe()</span><br></pre></td></tr></table></figure>
+
+<p>這樣就是完整的讓原型繼承原型的方法了。</p>
+<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2><ul>
+<li>JavaScript 核心篇 (六角學院）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/03/JS-core/(Day18)%20%E5%8E%9F%E5%9E%8B%E7%89%B9%E6%80%A7%E8%88%87%E7%B9%BC%E6%89%BF/" rel="prev" title="(Day18) 原型特性與繼承">
+                  <i class="fa fa-chevron-left"></i> (Day18) 原型特性與繼承
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/03/JS-core/(Day21)%20ES6%20class%20%E8%AA%9E%E6%B3%95%E7%B3%96/" rel="next" title="(Day 21) ES6 class 語法糖">
+                  (Day 21) ES6 class 語法糖 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

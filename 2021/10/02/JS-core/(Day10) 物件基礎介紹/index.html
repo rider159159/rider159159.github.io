@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="物件 在 JS 是十分重要的，並且關於物件有幾個滿重要的特性：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day10) 物件基礎介紹">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="物件 在 JS 是十分重要的，並且關於物件有幾個滿重要的特性：">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-02T04:42:16.000Z">
+<meta property="article:modified_time" content="2021-10-02T04:45:56.413Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day10) 物件基礎介紹&#x2F;&quot;,&quot;title&quot;:&quot;(Day10) 物件基礎介紹&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day10) 物件基礎介紹 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E7%B5%90%E6%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">物件結構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E5%8F%96%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">物件取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%B1%AC%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">新增屬性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E5%B1%AC%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">刪除屬性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-%E7%89%A9%E4%BB%B6%E5%87%BD%E5%BC%8F%E7%B8%AE%E5%AF%AB"><span class="nav-number">6.</span> <span class="nav-text">ES6 物件函式縮寫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day10) 物件基礎介紹
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-02 12:42:16 / 修改時間：12:45:56" itemprop="dateCreated datePublished" datetime="2021-10-02T12:42:16+08:00">2021-10-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/02/JS-core/(Day10)%20%E7%89%A9%E4%BB%B6%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day10) 物件基礎介紹/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">物件 在 JS 是十分重要的，並且關於物件有幾個滿重要的特性：</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>物件 在 JS 是十分重要的，並且關於物件有幾個滿重要的特性：</p>
+<ul>
+<li>物件傳參考</li>
+<li>物件深層/淺層 複製</li>
+</ul>
+<p>不過在這之前先來介紹物件基礎概念及操作 （<del>混文章</del>）</p>
+<h2 id="物件結構"><a href="#物件結構" class="headerlink" title="物件結構"></a>物件結構</h2><p>物件是有以下東西組成的： </p>
+<ul>
+<li>物件最外層的 <code>&#123;&#125;</code> 一般稱作物件實字 (Object Literals)。</li>
+<li>再來是物件實字中的內容是由 <code>屬性(property)</code> /  <code>值(value)</code> 組成。</li>
+</ul>
+<p>而物件的值可以是任何純值、陣列、物件本身以及函式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,</span><br><span class="line">	<span class="attr">age</span>:<span class="number">45</span>,</span><br><span class="line">	<span class="attr">vacation</span>:<span class="literal">true</span>,</span><br><span class="line">  <span class="attr">teacher</span>:[<span class="string">&#x27;Mike&#x27;</span>,<span class="string">&#x27;Lisha&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">	<span class="attr">classes</span>: &#123;</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>],</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="物件取值"><a href="#物件取值" class="headerlink" title="物件取值"></a>物件取值</h2><p>在 JS有兩種方法可以獲得物件中的值:</p>
+<ul>
+<li>使用 <code>.</code> 點運算子</li>
+<li>使用中刮號 <code>[]</code></li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,</span><br><span class="line">	<span class="attr">age</span>:<span class="number">45</span>,</span><br><span class="line">	<span class="attr">vacation</span>:<span class="literal">true</span>,</span><br><span class="line">  <span class="attr">teacher</span>:[<span class="string">&#x27;Mike&#x27;</span>,<span class="string">&#x27;Lisha&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">	<span class="attr">classes</span>: &#123;</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>],</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">school.name <span class="comment">//Taipei University</span></span><br><span class="line">school[<span class="string">&#x27;age&#x27;</span>] <span class="comment">//45</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>[]</code> 方法取值，有個好處，是可以透過變數替換 <code>[]</code> 中的值，來取出物件中不同的值，也就是：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,</span><br><span class="line">	<span class="attr">age</span>:<span class="number">45</span>,</span><br><span class="line">	<span class="attr">vacation</span>:<span class="literal">true</span>,</span><br><span class="line">  <span class="attr">teacher</span>:[<span class="string">&#x27;Mike&#x27;</span>,<span class="string">&#x27;Lisha&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">	<span class="attr">classes</span>: &#123;</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>],</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test =<span class="string">&#x27;name&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school[test]) <span class="comment">// Taipei University</span></span><br><span class="line">test = <span class="string">&#x27;age&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school[test]) <span class="comment">// 45</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>而這個特性 使用 <code>.</code>  運算子，便無法達成了，按照上面範例使用  <code>school.test</code>  他會回傳 <code>undefined</code> 。</p>
+<p>值得一題的是物件中的屬性都會是字串，當屬性不是字串時， JS 會自動將物件屬性強制轉成字串，因此我們實際上在建立物件時，通常會直接忽略屬性要寫成字串這點。</p>
+<p>也因此物件屬性是能添加某些特殊符號，不過是只能使用 <code>[]</code> 來取值的，而 <code>.</code> 運算子則無法正確使用。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj= &#123;</span><br><span class="line">	<span class="string">&#x27;obj-test&#x27;</span>:<span class="string">&#x27;測試文字&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">obj.obj-test <span class="comment">// test is not defined</span></span><br><span class="line">obj[<span class="string">&#x27;obj-test&#x27;</span>] <span class="comment">//測試文字</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新增屬性"><a href="#新增屬性" class="headerlink" title="新增屬性"></a>新增屬性</h2><p>實際上若要在物件新增屬性，方法就跟物件取值一樣使用 <code>.</code> 運算子或是 <code>[]</code> 指向新屬性，接著再使用 <code>=</code>  為該屬性賦值。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,</span><br><span class="line">	<span class="attr">age</span>:<span class="number">45</span>,</span><br><span class="line">	<span class="attr">vacation</span>:<span class="literal">true</span>,</span><br><span class="line">  <span class="attr">teacher</span>:[<span class="string">&#x27;Mike&#x27;</span>,<span class="string">&#x27;Lisha&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">	<span class="attr">classes</span>: &#123;</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>],</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">school.phoneNumber = <span class="string">&#x27;02-4050331&#x27;</span></span><br><span class="line">school[<span class="string">&#x27;address&#x27;</span>] = <span class="string">&#x27;台北市中正區北平西路3號&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(school.phoneNumber,school[<span class="string">&#x27;address&#x27;</span>]) <span class="comment">// &#x27;02-4050331&#x27; , &#x27;台北市中正區北平西路3號&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="刪除屬性"><a href="#刪除屬性" class="headerlink" title="刪除屬性"></a>刪除屬性</h2><p>要刪除屬性也很簡單，直接使用一元運算子 <code>delete</code> 再使用 <code>.</code> 或 <code>[]</code> 指向要刪除的屬性。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Taipei University&#x27;</span>,</span><br><span class="line">	<span class="attr">age</span>:<span class="number">45</span>,</span><br><span class="line">	<span class="attr">vacation</span>:<span class="literal">true</span>,</span><br><span class="line">  <span class="attr">teacher</span>:[<span class="string">&#x27;Mike&#x27;</span>,<span class="string">&#x27;Lisha&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">	<span class="attr">classes</span>: &#123;</span><br><span class="line">		<span class="attr">student</span>:[<span class="string">&#x27;Kevin&#x27;</span>,<span class="string">&#x27;Clara&#x27;</span>,<span class="string">&#x27;Rose&#x27;</span>],</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">delete</span> school.age</span><br><span class="line"><span class="built_in">console</span>.log(school.age) <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ES6-物件函式縮寫"><a href="#ES6-物件函式縮寫" class="headerlink" title="ES6 物件函式縮寫"></a>ES6 物件函式縮寫</h2><p>上面有提到物件中也能使用函式，正確的寫法會是</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="attr">broadcast</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">school.broadcast() <span class="comment">// 學校廣播</span></span><br></pre></td></tr></table></figure>
+
+<p>而 ES6 則為物件函式提供了縮寫，可以省略  <code>:function</code> 直接寫成 :</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> school = &#123;</span><br><span class="line">	<span class="function"><span class="title">broadcast</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;學校廣播&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">school.broadcast() <span class="comment">// 學校廣播</span></span><br></pre></td></tr></table></figure>
+
+<p>在使用一些大型框架時會很常看到這個縮寫方法。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>JavaScript 核心篇 (六角學院）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day09)%20%E9%81%8B%E7%AE%97%E5%AD%90%E4%B8%AD%E7%9A%84%E5%84%AA%E5%85%88%E6%80%A7%E5%8F%8A%E7%9B%B8%E4%BE%9D%E6%80%A7/" rel="prev" title="(Day9) 運算子中的優先性及相依性">
+                  <i class="fa fa-chevron-left"></i> (Day9) 運算子中的優先性及相依性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day11)%20%E7%89%A9%E4%BB%B6%E5%8F%83%E8%80%83%E7%89%B9%E6%80%A7/" rel="next" title="(Day11) 物件參考特性">
+                  (Day11) 物件參考特性 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

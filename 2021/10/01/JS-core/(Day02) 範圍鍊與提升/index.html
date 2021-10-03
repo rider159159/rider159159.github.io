@@ -23,23 +23,23 @@
 <meta name="description" content="範圍鍊在 JavaScript 一堆奇奇怪怪的觀念中算是簡單好懂的，簡單來說就是：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(Day-02) 範圍鍊與提升">
-<meta property="og:url" content="https://rider159159.github.io/2021/10/01/JS-core/(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/index.html">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/index.html">
 <meta property="og:site_name" content="地方的工程師需要筆記">
 <meta property="og:description" content="範圍鍊在 JavaScript 一堆奇奇怪怪的觀念中算是簡單好懂的，簡單來說就是：">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-01T03:35:27.000Z">
-<meta property="article:modified_time" content="2021-10-01T06:22:18.340Z">
+<meta property="article:modified_time" content="2021-10-03T05:29:34.182Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://rider159159.github.io/2021/10/01/JS-core/(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/">
+<link rel="canonical" href="https://rider159159.github.io/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day-02) 範圍鍊與提升&#x2F;&quot;,&quot;title&quot;:&quot;(Day-02) 範圍鍊與提升&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;01&#x2F;JS-core&#x2F;(Day02) 範圍鍊與提升&#x2F;&quot;,&quot;title&quot;:&quot;(Day-02) 範圍鍊與提升&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
 <title>(Day-02) 範圍鍊與提升 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -205,7 +205,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/01/JS-core/(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
@@ -228,10 +228,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
-      
 
-      <time title="創建時間：2021-10-01 11:35:27 / 修改時間：14:22:18" itemprop="dateCreated datePublished" datetime="2021-10-01T11:35:27+08:00">2021-10-01</time>
+      <time title="創建時間：2021-10-01 11:35:27" itemprop="dateCreated datePublished" datetime="2021-10-01T11:35:27+08:00">2021-10-01</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-10-03 13:29:34" itemprop="dateModified" datetime="2021-10-03T13:29:34+08:00">2021-10-03</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -251,8 +257,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2021/10/01/JS-core/(Day-02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/01/JS-core/(Day-02) 範圍鍊與提升/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/01/JS-core/(Day02) 範圍鍊與提升/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -331,13 +337,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day-01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A/" rel="prev" title="(Day-01) 執行環境與執行堆疊">
-                  <i class="fa fa-chevron-left"></i> (Day-01) 執行環境與執行堆疊
+                <a href="/2021/05/09/GTM-testing-and-GTM-Built-in-event/" rel="prev" title="GTM 測試功能和瀏覽即時的 GA 紀錄">
+                  <i class="fa fa-chevron-left"></i> GTM 測試功能和瀏覽即時的 GA 紀錄
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day3)%20%E5%9F%B7%E8%A1%8C%E7%B7%92%20%E8%88%87%20%E5%90%8C%E6%AD%A5%20&%20%E9%9D%9E%E5%90%8C%E6%AD%A5/" rel="next" title="(Day3) 執行緒 與 同步 & 非同步">
-                  (Day3) 執行緒 與 同步 & 非同步 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/10/01/JS-core/(Day01)%20%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E8%88%87%E5%9F%B7%E8%A1%8C%E5%A0%86%E7%96%8A/" rel="next" title="(Day-01) 執行環境與執行堆疊">
+                  (Day-01) 執行環境與執行堆疊 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

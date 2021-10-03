@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<meta name="description" content="前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Day6) 強制轉型&amp;顯性轉型">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-02T04:02:10.000Z">
+<meta property="article:modified_time" content="2021-10-03T05:31:00.646Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&amp;%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;02&#x2F;JS-core&#x2F;(Day06)-強制轉型&amp;顯性轉型&#x2F;&quot;,&quot;title&quot;:&quot;(Day6) 強制轉型&amp;顯性轉型&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>(Day6) 強制轉型&顯性轉型 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%95%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.</span> <span class="nav-text">動態型別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">顯性轉型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%89%E6%88%90-String"><span class="nav-number">2.1.</span> <span class="nav-text">轉成 String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%89%E6%88%90-Number"><span class="nav-number">2.2.</span> <span class="nav-text">轉成 Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%89%E6%88%90-Boolean"><span class="nav-number">2.3.</span> <span class="nav-text">轉成 Boolean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (Day6) 強制轉型&顯性轉型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-10-02 12:02:10" itemprop="dateCreated datePublished" datetime="2021-10-02T12:02:10+08:00">2021-10-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-10-03 13:31:00" itemprop="dateModified" datetime="2021-10-03T13:31:00+08:00">2021-10-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/02/JS-core/(Day06)-%E5%BC%B7%E5%88%B6%E8%BD%89%E5%9E%8B&%E9%A1%AF%E6%80%A7%E8%BD%89%E5%9E%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/02/JS-core/(Day06)-強制轉型&顯性轉型/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="動態型別"><a href="#動態型別" class="headerlink" title="動態型別"></a>動態型別</h2><p>前面有介紹 JavaScript  資料分成七種原始型別以及物件型別，關於型別 JavaScript 有一種廣為人知的特性：動態型別。</p>
+<p>JavaScript 之所以會是動態行別，就要提到到實做中 JavaScript 最容易碰上的底層問題之一 『強制轉型』，而 強制轉型 又分成兩種</p>
+<ul>
+<li>顯性轉型 ( Explicit  Conversion ) ，故名思義就是我們實際在程式碼中，會看有明確對變數執行轉型動作。</li>
+<li>隱含轉型 ( Implicit Conversion )，和上顯性轉型與之相反概念，就是看不到單從程式碼，在程式碼上沒看到轉型動作，但 JavaScript 中偷偷幫你轉型的方法。</li>
+</ul>
+<p>今天就會介紹大致上有哪些語法是顯性轉型，下篇則會再介紹隱含轉型。</p>
+<p>而這兩種術語並沒有特別明確的規範，他只是相對上的術語，因此有些狀況看起來是 ：似隱似顯的 但其實不用太糾結是分類在哪種，知道如何使用就沒有問題了，兩種轉型範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = <span class="string">&#x27;123&#x27;</span></span><br><span class="line">test1 = <span class="built_in">Number</span>(test1 )<span class="comment">//顯性轉型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test2 = <span class="number">456</span></span><br><span class="line">test2 = test2 + <span class="string">&#x27;1&#x27;</span> <span class="comment">//隱性轉型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="顯性轉型"><a href="#顯性轉型" class="headerlink" title="顯性轉型"></a>顯性轉型</h2><p>在 『你不懂JS』一書中是將顯性轉型分成以下三種: </p>
+<ul>
+<li>顯性轉型 ： Strings &lt;–&gt; Numbers</li>
+<li>顯性轉型 ：数字字符串</li>
+<li>顯性轉型 ：Boolean</li>
+</ul>
+<p>『你不懂JS』一書這種分法確實比較全面，但對我們這些腦袋比較簡單的人來說，反而不好理解，這邊試者改成比較容易理解三種：</p>
+<ul>
+<li>顯性轉型 ：轉成 String</li>
+<li>顯性轉型 ：轉成 Number</li>
+<li>顯性轉型 ：轉成 Boolean</li>
+</ul>
+<p>這邊也在根據上面三種分類，稍微說明有哪些語法。</p>
+<h3 id="轉成-String"><a href="#轉成-String" class="headerlink" title="轉成 String"></a>轉成 String</h3><ul>
+<li>使用 <code>String()</code> 方法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test3 = <span class="number">123</span></span><br><span class="line">test = <span class="built_in">String</span>(test3)</span><br><span class="line"><span class="keyword">typeof</span>(test3 ) <span class="comment">// &#x27;123&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>陣列原型的 <code>toString()</code></li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [<span class="string">&quot;R&quot;</span>,<span class="string">&quot;y&quot;</span>,<span class="string">&quot;d&quot;</span>,<span class="string">&quot;e&quot;</span>,<span class="string">&quot;r&quot;</span>]</span><br><span class="line"><span class="keyword">var</span> test4 = array.toString() <span class="comment">//&#x27;R,y,d,e,r&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="轉成-Number"><a href="#轉成-Number" class="headerlink" title="轉成 Number"></a>轉成 Number</h3><ul>
+<li>使用 <code>Number()</code>  、 <code>parseInt()</code> 方法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> string = <span class="string">&#x27;123&#x27;</span></span><br><span class="line"><span class="keyword">var</span> test5 = <span class="built_in">Number</span>(string) <span class="comment">//123</span></span><br><span class="line"><span class="keyword">var</span> test6 = <span class="built_in">parseInt</span>(string) <span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 使用一元正/負運算子 <code>+</code>、<code>-</code></li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> string = <span class="string">&#x27;123&#x27;</span></span><br><span class="line"><span class="keyword">var</span> test7 = + string <span class="comment">//123</span></span><br></pre></td></tr></table></figure>
+
+<p>不過這種方法確實容易跟 二元運 算術運算子的 <code>＋</code> 、 <code>-</code>  寫法搞混，也因此實做確實比較少看到這種寫法。</p>
+<h3 id="轉成-Boolean"><a href="#轉成-Boolean" class="headerlink" title="轉成 Boolean"></a>轉成 Boolean</h3><ul>
+<li>使用 <code>Boolean()</code> 方法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> string = <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="keyword">var</span> array =[]</span><br><span class="line"><span class="keyword">var</span> number = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> not = <span class="literal">null</span></span><br><span class="line"><span class="keyword">var</span> boolean1 = <span class="built_in">Boolean</span>(string) <span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> boolean2 = <span class="built_in">Boolean</span>(array) <span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> boolean3 = <span class="built_in">Boolean</span>(number) <span class="comment">// false</span></span><br><span class="line"><span class="keyword">var</span> boolean4 = <span class="built_in">Boolean</span>(not)<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>以上大概就是常見的顯性轉型，值得一提的是使用 <code>new String()</code>、<code>new Number()</code> 等等的 <code>new</code> 建構式方法他們並不算在強制轉型的範疇中，因為這些建構式製作出來的都會物件型別的資料。</p>
+<p>當然還有一種狀況是，將變數的值調整成另一種型別的值，這種作法，也是屬於顯性轉換的一種，不過這部分一看就知道，因此上述都沒有特別提出來，例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test8 = <span class="number">123</span></span><br><span class="line">test8 = <span class="string">&#x27;test&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>JavaScript 核心篇 (六角學院）</li>
+<li><a target="_blank" rel="noopener" href="https://cythilya.github.io/2018/10/15/coercion/#tonumber">你懂 JavaScript 嗎？#8 強制轉型（Coercion）</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/types%20%26%20grammar/ch4.md">你不懂JS：类型与文法</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/01/JS-core/(Day05)-%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8F%8A%E7%89%A9%E4%BB%B6%E5%9E%8B%E5%88%A5/" rel="prev" title="(Day5) 原始型別及物件型別">
+                  <i class="fa fa-chevron-left"></i> (Day5) 原始型別及物件型別
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/02/JS-core/(Day07)%20%E9%9A%B1%E5%90%AB%E8%BD%89%E5%9E%8B-%E5%81%B7%E5%81%B7%E8%BD%89%E6%8F%9B%E7%9A%84%20Strings%20%E8%88%87%20Numbers%20%E9%A1%9E%E5%9E%8B/" rel="next" title="(Day7) 隱含轉型 - 偷偷轉換的 Strings 與 Numbers 類型">
+                  (Day7) 隱含轉型 - 偷偷轉換的 Strings 與 Numbers 類型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
