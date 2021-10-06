@@ -20,37 +20,33 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
-<meta name="description" content="本次來介紹如何測試 GTM 是否能正確使用，以及如何觀察即時更新 GA 紀錄。">
+<meta name="description" content="之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GTM 測試功能和瀏覽即時的 GA 紀錄">
-<meta property="og:url" content="https://rider159159.github.io/2021/05/09/GTM-testing-and-GTM-Built-in-event/index.html">
+<meta property="og:title" content="[[Prototype]] 、__proto__ 、 prototype 三者差異">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/index.html">
 <meta property="og:site_name" content="地方的工程師需要筆記">
-<meta property="og:description" content="本次來介紹如何測試 GTM 是否能正確使用，以及如何觀察即時更新 GA 紀錄。">
+<meta property="og:description" content="之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/Fb1dRMT.png">
-<meta property="og:image" content="https://i.imgur.com/Oohk10l.png">
-<meta property="og:image" content="https://i.imgur.com/uDUJ2LY.png">
-<meta property="og:image" content="https://i.imgur.com/bhbJJaH.png">
-<meta property="og:image" content="https://i.imgur.com/dW4rPMd.png">
-<meta property="og:image" content="https://i.imgur.com/Lvx2QYE.png">
-<meta property="article:published_time" content="2021-05-09T06:11:26.000Z">
-<meta property="article:modified_time" content="2021-10-01T03:48:15.818Z">
+<meta property="og:image" content="https://i.imgur.com/td2VUJN.png">
+<meta property="og:image" content="https://i.imgur.com/SJsu342.png">
+<meta property="og:image" content="https://i.imgur.com/3oXce3h.png">
+<meta property="article:published_time" content="2021-10-06T06:58:41.000Z">
+<meta property="article:modified_time" content="2021-10-06T07:34:07.409Z">
 <meta property="article:author" content="Ryder">
-<meta property="article:tag" content="Google Analytics">
-<meta property="article:tag" content="GA4">
-<meta property="article:tag" content="GTM">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript Core">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/Fb1dRMT.png">
+<meta name="twitter:image" content="https://i.imgur.com/td2VUJN.png">
 
 
-<link rel="canonical" href="https://rider159159.github.io/2021/05/09/GTM-testing-and-GTM-Built-in-event/">
+<link rel="canonical" href="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;05&#x2F;09&#x2F;GTM-testing-and-GTM-Built-in-event&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;09&#x2F;GTM-testing-and-GTM-Built-in-event&#x2F;&quot;,&quot;title&quot;:&quot;GTM 測試功能和瀏覽即時的 GA 紀錄&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;06&#x2F;[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;06&#x2F;[[Prototype]] 、__proto__ 、 prototype 三者差異&#x2F;&quot;,&quot;title&quot;:&quot;[[Prototype]] 、__proto__ 、 prototype 三者差異&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>GTM 測試功能和瀏覽即時的 GA 紀錄 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+<title>[[Prototype]] 、__proto__ 、 prototype 三者差異 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
   
 
 
@@ -149,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E5%95%9F%20GTM%20%E6%B8%AC%E8%A9%A6%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">開啟 GTM 測試功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86%20GTM%20%E5%85%A7%E5%BB%BA%E4%BA%8B%E4%BB%B6%E4%BB%8B%E7%B4%B9"><span class="nav-number">3.</span> <span class="nav-text">部分 GTM 內建事件介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%80%E7%9C%8B%20GA%20%E5%8D%B3%E6%99%82%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">觀看 GA 即時事件</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype-%E5%92%8C-proto-%E7%9A%84%E5%B7%AE%E7%95%B0"><span class="nav-number">2.</span> <span class="nav-text">[[Prototype]] 和 proto 的差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype"><span class="nav-number">3.</span> <span class="nav-text">prototype</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">4.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,7 +209,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/05/09/GTM-testing-and-GTM-Built-in-event/">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
@@ -226,7 +222,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          GTM 測試功能和瀏覽即時的 GA 紀錄
+          [[Prototype]] 、__proto__ 、 prototype 三者差異
         </h1>
 
         <div class="post-meta-container">
@@ -236,23 +232,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
+      
 
-      <time title="創建時間：2021-05-09 14:11:26" itemprop="dateCreated datePublished" datetime="2021-05-09T14:11:26+08:00">2021-05-09</time>
+      <time title="創建時間：2021-10-06 14:58:41 / 修改時間：15:34:07" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-10-01 11:48:15" itemprop="dateModified" datetime="2021-10-01T11:48:15+08:00">2021-10-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Google-Analytics/" itemprop="url" rel="index"><span itemprop="name">Google Analytics</span></a>
+          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
         </span>
     </span>
 
@@ -265,15 +255,15 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2021/05/09/GTM-testing-and-GTM-Built-in-event/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/05/09/GTM-testing-and-GTM-Built-in-event/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/06/[[Prototype]] 、__proto__ 、 prototype 三者差異/" itemprop="commentCount"></span>
     </a>
   </span>
   
   
 </div>
 
-            <div class="post-description">本次來介紹如何測試 GTM 是否能正確使用，以及如何觀察即時更新 GA 紀錄。</div>
+            <div class="post-description">之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</div>
         </div>
       </header>
 
@@ -281,43 +271,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="前言">前言</h2>
-<p>上回我們說到，GTM  串接 GA 後再用 CDN 綁到底自己專案上，本次則來介紹如何測試 GTM 是否能正確使用，以及如何觀察即時更新 GA 紀錄。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</p>
+<h2 id="Prototype-和-proto-的差異"><a href="#Prototype-和-proto-的差異" class="headerlink" title="[[Prototype]] 和 proto 的差異"></a>[[Prototype]] 和 <strong>proto</strong> 的差異</h2><p>目前使用 Chrome 使用任何物件型別的值，點開他底下都會有 <code>[[Prototype]]</code> 他其時就指向該資料的原型，如圖：<br><img src="https://i.imgur.com/td2VUJN.png" alt="`更新後的 [[Prototype]] 原型`"></p>
+<p>在過去 JavaScript 並沒有明確規範瀏覽器要如何製作原型這個功能，因此大部分瀏覽器都採用  <code>__proto__</code> 製做原型，不過後面 ECMAScript 有規範，要使用 <code>[[Prototype]]</code>  來製作原型功能。</p>
+<p>不過這時大多瀏覽器已經使用  <code>__proto__</code>  的方式製作原型，因此  <code>[[Prototype]]</code>  則是在後續瀏覽器更新，才陸續被實做上去，不過 <code>[[Prototype]]</code> 、<code>__proto__</code> 都是指原型。</p>
+<p>也因此你可以看到過去介紹原型文章、影片中資料的原型都會是 <code>__proto__</code> 而非 <code>[[Prototype]]</code> ，這就是之前瀏覽器尚未更新原型部分的關係，如圖：<br><img src="https://i.imgur.com/SJsu342.png" alt="更新前的 __proto__ 原型"></p>
+<p>而最近 Chrome 瀏覽器更新， <code>__proto__</code> 則替換成 <code>[[Prototype]]</code> ，但為了避免過去使用 <code>__proto__</code> 開發的網站無法正確運作，因此仍保留 <code>__proto__</code> 方法，關於這部分 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#%E7%B9%BC%E6%89%BF%E5%B1%AC%E6%80%A7">MDN 文件</a>有詳細的說明。</p>
+<p>過去可以使用 <code>__proto__</code> 製作原型的方法，如下面範例</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.__proto__.getLast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> thsi[<span class="built_in">this</span>.length - <span class="number">1</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a.getLast)</span><br></pre></td></tr></table></figure>
+<p>這種 <code>__proto__</code> 其實不屬於正規 JavaScript 的，他算是瀏覽器建立的方法，也因此實務上都不太會看到這種寫法，不過 Chrome 更新後仍可以支援這種寫法。</p>
+<p>還有一點要特別提的是，目前 Chrome 雖然不確定是什麼原因，不過最底兩層的原型仍會是 <code>__proto__</code> ，如圖<br><img src="https://i.imgur.com/3oXce3h.png"></p>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><p>而 <code>prototype</code> 則是 正規的 JavaScript 原型方法，在為建構函式新增方法時、原型製作多層串接時，也都會使用這個方法，詳細使用<a href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">過去鐵人賽文章</a>有介紹過。</p>
+<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#%E7%B9%BC%E6%89%BF%E5%B1%AC%E6%80%A7">MDN 文件</a></li>
+</ul>
 
-<h2 id="開啟 GTM 測試功能">開啟 GTM 測試功能</h2>
-<p>先介紹一下GTM 測試功能，進入 GTM 首頁後，右上角會有預覽、以及提交兩個按鈕，如果想要進入測試功能，就點擊預覽。</p>
-<img src="https://i.imgur.com/Fb1dRMT.png">
-<br>
-<p>點擊預覽後會開啟新的頁面叫做 Google Tag Assistant ，這時我們要輸入先前介紹的，有該 GTM CDN 的網址，這邊不管輸入的是 local 端網址、還是實際的線上網址，只有網址有設定 GTM 的CDN 就沒有問題了，這邊我使用本地的 <code>http://127.0.0.1:5500/index.html</code> 網址做測試，網址輸入後就按下 Connect 按鈕拉。
-</p>
-<img src="https://i.imgur.com/Oohk10l.png">
-<br>
-
-<p>
-按下 Connect 按鈕後會馬上跳出，剛剛輸入網址的頁面，並且這頁面網址最後方帶有 <code>?gtm_debug=x</code>，接著大約等個 10 秒後， Tag Assistant 頁面會跳出 Connected 的視窗，這就代表你的 GTM 有成功設置囉!
-</p>
-<img src="https://i.imgur.com/uDUJ2LY.png">
-<br>
-<h2 id="部分 GTM 內建事件介紹">部分 GTM 內建事件介紹</h2>
-<p>
-GTM 本身預設會帶有監測部分動作的事件，我們接下來可以在剛剛 GTM 開啟的頁面中，做一些動作。<span style="font-size:14px">(帶有 ?gtm_debug=X 的那個頁面)
-</span>
-<br>
-會發現 Tag Assistant 頁面的左邊欄位會去記錄部分事件，比如: <b>Scroll Depth</b> 就是使用者把網頁滑到底、而 <b>Link Click</b> 則是在使用者在網頁中點擊任意連結。
-</p>
-<img src="https://i.imgur.com/bhbJJaH.png">
-<br>
-<h2 id ="觀看 GA 即時事件">觀看 GA 即時事件</h2>
-<p>而這些紀錄也都會存到和 GTM 綁定的 GA 上，這時我們到 GA 的即時、DebugView 頁面也都會看到這些紀錄。</p>
-<img src="https://i.imgur.com/dW4rPMd.png">
-<img src="https://i.imgur.com/Lvx2QYE.png">
-<br>
-<p>值得一提的是， GA 上的即時、DebugView 頁面，只會顯示最近 30 分鐘的網頁事件，超過 30 分鐘就看不到了。
-<br>
-而 GA 其他的瀏覽方式，如報表、首頁都會需要等待一天，GA 才會把資料做更新，所以在要 Debug GTM 事件的狀況下，工程師一般都會觀察 即時、DebugView 頁面。
-<br>
-下面一篇會開始說明，如何新增 GTM 的內建事件 。
-</p>
     </div>
 
     
@@ -326,23 +294,19 @@ GTM 本身預設會帶有監測部分動作的事件，我們接下來可以在�
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Google-Analytics/" rel="tag"># Google Analytics</a>
-              <a href="/tags/GA4/" rel="tag"># GA4</a>
-              <a href="/tags/GTM/" rel="tag"># GTM</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/05/02/GA4CascadGTMe/" rel="prev" title="為你的網站導入 GA4 - GA4 與 GTM 串接">
-                  <i class="fa fa-chevron-left"></i> 為你的網站導入 GA4 - GA4 與 GTM 串接
+                <a href="/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/" rel="prev" title="(Day30) - 目錄與完結心得">
+                  <i class="fa fa-chevron-left"></i> (Day30) - 目錄與完結心得
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/01/JS-core/(Day02)%20%E7%AF%84%E5%9C%8D%E9%8D%8A%E8%88%87%E6%8F%90%E5%8D%87/" rel="next" title="(Day02) 範圍鍊與提升">
-                  (Day02) 範圍鍊與提升 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
