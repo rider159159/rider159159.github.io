@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;}}</script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
 <meta name="description" content="之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[[Prototype]] 、__proto__ 、 prototype 三者差異">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://i.imgur.com/SJsu342.png">
 <meta property="og:image" content="https://i.imgur.com/3oXce3h.png">
 <meta property="article:published_time" content="2021-10-06T06:58:41.000Z">
-<meta property="article:modified_time" content="2021-10-06T07:34:07.409Z">
+<meta property="article:modified_time" content="2021-10-06T10:38:40.730Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript Core">
@@ -234,7 +234,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2021-10-06 14:58:41 / 修改時間：15:34:07" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
+      <time title="創建時間：2021-10-06 14:58:41 / 修改時間：18:38:40" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
 <p>而最近 Chrome 瀏覽器更新， <code>__proto__</code> 則替換成 <code>[[Prototype]]</code> ，但為了避免過去使用 <code>__proto__</code> 開發的網站無法正確運作，因此仍保留 <code>__proto__</code> 方法，關於這部分 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#%E7%B9%BC%E6%89%BF%E5%B1%AC%E6%80%A7">MDN 文件</a>有詳細的說明。</p>
 <p>過去可以使用 <code>__proto__</code> 製作原型的方法，如下面範例</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.__proto__.getLast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> thsi[<span class="built_in">this</span>.length - <span class="number">1</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a.getLast)</span><br></pre></td></tr></table></figure>
-<p>這種 <code>__proto__</code> 其實不屬於正規 JavaScript 的，他算是瀏覽器建立的方法，也因此實務上都不太會看到這種寫法，不過 Chrome 更新後仍可以支援這種寫法。</p>
+<p>這種 <code>__proto__</code> 其實不屬於正規 JavaScript 的，他算是瀏覽器建立的方法，也因此實務上都不太會看到這種寫法，不過 Chrome 更新後仍可以支援這種寫法，而正規的原型方法，如：建構函式、 class 等等的對於這個更新使用上也沒有任何差別。</p>
 <p>還有一點要特別提的是，目前 Chrome 雖然不確定是什麼原因，不過最底兩層的原型仍會是 <code>__proto__</code> ，如圖<br><img src="https://i.imgur.com/3oXce3h.png"></p>
 <h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><p>而 <code>prototype</code> 則是 正規的 JavaScript 原型方法，在為建構函式新增方法時、原型製作多層串接時，也都會使用這個方法，詳細使用<a href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">過去鐵人賽文章</a>有介紹過。</p>
 <h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2><ul>
