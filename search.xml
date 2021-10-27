@@ -1545,7 +1545,7 @@ GTM 本身預設會帶有監測部分動作的事件，我們接下來可以在�
   </entry>
   <entry>
     <title>[[Prototype]] 、__proto__ 、 prototype 三者差異</title>
-    <url>/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/</url>
+    <url>/2021/10/06/JS-core/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</p>
 <h2 id="Prototype-和-proto-的差異"><a href="#Prototype-和-proto-的差異" class="headerlink" title="[[Prototype]] 和 proto 的差異"></a>[[Prototype]] 和 <strong>proto</strong> 的差異</h2><p>目前使用 Chrome 使用任何物件型別的值，點開他底下都會有 <code>[[Prototype]]</code> 他其時就指向該資料的原型，如圖：<br><img src="https://i.imgur.com/td2VUJN.png" alt="`更新後的 [[Prototype]] 原型`"></p>
 <p>在過去 JavaScript 並沒有明確規範瀏覽器要如何製作原型這個功能，因此大部分瀏覽器都採用  <code>__proto__</code> 製做原型，不過後面 ECMAScript 有規範，要使用 <code>[[Prototype]]</code>  來製作原型功能。</p>
@@ -1567,6 +1567,44 @@ GTM 本身預設會帶有監測部分動作的事件，我們接下來可以在�
       <tags>
         <tag>JavaScript</tag>
         <tag>JavaScript Core</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>圖片載入判斷以及圖片替代功能</title>
+    <url>/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。</p>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h3><p>上述的圖片檢查並替換的功能，其中的核心就是 <code>new Image()</code> 這個作法其實時就是讓 JavaScript 動態產生一個圖片元素，而 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image">MDN 文件</a> 說明更為直接，直接指出</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myImage = <span class="keyword">new</span> Image(<span class="number">100</span>, <span class="number">200</span>);</span><br><span class="line">myImage.src = <span class="string">&#x27;picture.jpg&#x27;</span>;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(myImage);</span><br></pre></td></tr></table></figure>
+<p>上面程式碼，其實就等同於下面 img HTML 的寫法。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;img width=<span class="string">&quot;100&quot;</span> height=<span class="string">&quot;200&quot;</span> src=<span class="string">&quot;picture.jpg&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>而最重要的是 <code>new Image()</code> 這個功能，還可以透過 <code>complete</code> 這個屬性來檢查圖片是否載入完成，這邊可以直接看範例：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="圖片替換 img" src="https://codepen.io/rider159159/embed/MWvmXoa?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/rider159159/pen/MWvmXoa">
+  圖片替換 img</a> by tien (<a href="https://codepen.io/rider159159">@rider159159</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>上面範例中有五張圖片，前面四張都是能夠正確顯示（貓貓），最後一張刻意將網址打錯，經由 <code>image.complete</code> 判斷，因為圖片無法載入，變使用預設圖片（可愛的狗勾）來將無法顯示的圖片作替換，上述範例是針對 <code>img</code> 標籤圖片作替換的，那麼想替換 <code>background-image</code> 中的圖片是否有辦法？<br>結果當然是有辦法的，實際作法和上面雷同，不過會使用 <code>split()</code> 方法將圖片網址取出，再使用 <code>complete</code> 判斷，比如以下範例</p>
+ <iframe height="300" style="width: 100%;" scrolling="no" title="圖片替換 background-image" src="https://codepen.io/rider159159/embed/oNeWvpd?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/rider159159/pen/oNeWvpd">
+  圖片替換 background-image</a> by tien (<a href="https://codepen.io/rider159159">@rider159159</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>值得一提的是上面範例中有使用到 <code>image.onload</code> 這個方法，這個方法是在圖片正確載入後會被執行，以上面範例來說確實可以不用添加，但如果有需要對正確載入的圖片做一些事，則可以使用到這個方法。</p>
+<h3 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h3><ul>
+<li><a href="http://otischou.tw/notes/2017/01/01/detect-is-image-loaded.html">圖片到底載入了沒？</a></li>
+<li><a href="https://hsiangfeng.github.io/javascript/20201222/2162934013/">該如何知道圖片載入完成沒?</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image">MDN 文件</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript Tips</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>JavaScript Tips</tag>
       </tags>
   </entry>
 </search>

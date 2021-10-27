@@ -151,16 +151,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分類</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
@@ -199,7 +199,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
@@ -212,7 +212,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/" class="post-title-link" itemprop="url">[[Prototype]] 、__proto__ 、 prototype 三者差異</a>
+          <a href="/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">圖片載入判斷以及圖片替代功能</a>
         </h2>
 
         <div class="post-meta-container">
@@ -222,10 +222,117 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
-      
 
-      <time title="創建時間：2021-10-06 14:58:41 / 修改時間：18:38:40" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
+      <time title="創建時間：2021-10-26 19:08:31" itemprop="dateCreated datePublished" datetime="2021-10-26T19:08:31+08:00">2021-10-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-10-27 15:25:04" itemprop="dateModified" datetime="2021-10-27T15:25:04+08:00">2021-10-27</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript-Tips/" itemprop="url" rel="index"><span itemprop="name">JavaScript Tips</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/26/JS-tips/圖片載入判斷以及圖片替代功能/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/06/JS-core/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/06/JS-core/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/" class="post-title-link" itemprop="url">[[Prototype]] 、__proto__ 、 prototype 三者差異</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-10-06 14:58:41" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-10-26 19:08:58" itemprop="dateModified" datetime="2021-10-26T19:08:58+08:00">2021-10-26</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -245,8 +352,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/06/[[Prototype]] 、__proto__ 、 prototype 三者差異/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/10/06/JS-core/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/06/JS-core/[[Prototype]] 、__proto__ 、 prototype 三者差異/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -263,7 +370,7 @@
           <p>之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
+              <a class="btn" href="/2021/10/06/JS-core/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1024,101 +1131,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/10/03/JS-core/(Day23)%20ES6%20%E7%AE%AD%E9%A0%AD%E5%87%BD%E5%BC%8F/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/03/JS-core/(Day22)%20ES6%20%E7%9A%84%20let%20%E3%80%81const/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
-      <meta itemprop="name" content="Ryder">
-      <meta itemprop="description" content="Ryder 的 Blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="地方的工程師需要筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/03/JS-core/(Day22)%20ES6%20%E7%9A%84%20let%20%E3%80%81const/" class="post-title-link" itemprop="url">(Day 22) ES6 的 let 、const</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-      
-
-      <time title="創建時間：2021-10-03 12:59:13 / 修改時間：13:30:09" itemprop="dateCreated datePublished" datetime="2021-10-03T12:59:13+08:00">2021-10-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2021/10/03/JS-core/(Day22)%20ES6%20%E7%9A%84%20let%20%E3%80%81const/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/03/JS-core/(Day22) ES6 的 let 、const/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在 ES6 新增兩種變數方法 let 、 const ，不過我們比較常把 const 叫做常數，主要是因為 var 的特性 容易觸發 Bug ， 這邊與 var 的差異主要有</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/03/JS-core/(Day22)%20ES6%20%E7%9A%84%20let%20%E3%80%81const/">
                 閱讀全文 &raquo;
               </a>
             </div>

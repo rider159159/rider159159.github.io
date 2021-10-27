@@ -20,33 +20,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
-<meta name="description" content="之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。">
+<meta name="description" content="製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[[Prototype]] 、__proto__ 、 prototype 三者差異">
-<meta property="og:url" content="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/index.html">
+<meta property="og:title" content="圖片載入判斷以及圖片替代功能">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="地方的工程師需要筆記">
-<meta property="og:description" content="之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。">
+<meta property="og:description" content="製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/td2VUJN.png">
-<meta property="og:image" content="https://i.imgur.com/SJsu342.png">
-<meta property="og:image" content="https://i.imgur.com/3oXce3h.png">
-<meta property="article:published_time" content="2021-10-06T06:58:41.000Z">
-<meta property="article:modified_time" content="2021-10-06T10:38:40.730Z">
+<meta property="article:published_time" content="2021-10-26T11:08:31.000Z">
+<meta property="article:modified_time" content="2021-10-27T07:25:04.869Z">
 <meta property="article:author" content="Ryder">
 <meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="JavaScript Core">
+<meta property="article:tag" content="JavaScript Tips">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/td2VUJN.png">
 
 
-<link rel="canonical" href="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
+<link rel="canonical" href="https://rider159159.github.io/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;06&#x2F;[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;06&#x2F;[[Prototype]] 、__proto__ 、 prototype 三者差異&#x2F;&quot;,&quot;title&quot;:&quot;[[Prototype]] 、__proto__ 、 prototype 三者差異&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;26&#x2F;JS-tips&#x2F;%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;26&#x2F;JS-tips&#x2F;圖片載入判斷以及圖片替代功能&#x2F;&quot;,&quot;title&quot;:&quot;圖片載入判斷以及圖片替代功能&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>[[Prototype]] 、__proto__ 、 prototype 三者差異 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+<title>圖片載入判斷以及圖片替代功能 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
   
 
 
@@ -145,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype-%E5%92%8C-proto-%E7%9A%84%E5%B7%AE%E7%95%B0"><span class="nav-number">2.</span> <span class="nav-text">[[Prototype]] 和 proto 的差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype"><span class="nav-number">3.</span> <span class="nav-text">prototype</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">4.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image"><span class="nav-number">2.</span> <span class="nav-text">Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%8D%BB"><span class="nav-number">3.</span> <span class="nav-text">參考文獻</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -160,16 +156,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分類</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
@@ -209,7 +205,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/06/[[Prototype]]%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
@@ -222,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          [[Prototype]] 、__proto__ 、 prototype 三者差異
+          圖片載入判斷以及圖片替代功能
         </h1>
 
         <div class="post-meta-container">
@@ -232,17 +228,23 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
-      
 
-      <time title="創建時間：2021-10-06 14:58:41 / 修改時間：18:38:40" itemprop="dateCreated datePublished" datetime="2021-10-06T14:58:41+08:00">2021-10-06</time>
+      <time title="創建時間：2021-10-26 19:08:31" itemprop="dateCreated datePublished" datetime="2021-10-26T19:08:31+08:00">2021-10-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-10-27 15:25:04" itemprop="dateModified" datetime="2021-10-27T15:25:04+08:00">2021-10-27</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JavaScript-Core/" itemprop="url" rel="index"><span itemprop="name">JavaScript Core</span></a>
+          <a href="/categories/JavaScript-Tips/" itemprop="url" rel="index"><span itemprop="name">JavaScript Tips</span></a>
         </span>
     </span>
 
@@ -255,15 +257,15 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2021/10/06/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/06/[[Prototype]] 、__proto__ 、 prototype 三者差異/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/26/JS-tips/圖片載入判斷以及圖片替代功能/" itemprop="commentCount"></span>
     </a>
   </span>
   
   
 </div>
 
-            <div class="post-description">之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</div>
+            <div class="post-description">製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。</div>
         </div>
       </header>
 
@@ -271,19 +273,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前在開發專案時，有發現 Chrome 的原型似乎被調整了，不過當時專案對原型使用量不大，因此沒特別注意調整什麼，而上個月開始寫鐵人賽時，有提到原型，有稍微深入瞭解一下 JavaScript 的原型發生什麼是了，這邊稍微說明一下。</p>
-<h2 id="Prototype-和-proto-的差異"><a href="#Prototype-和-proto-的差異" class="headerlink" title="[[Prototype]] 和 proto 的差異"></a>[[Prototype]] 和 <strong>proto</strong> 的差異</h2><p>目前使用 Chrome 使用任何物件型別的值，點開他底下都會有 <code>[[Prototype]]</code> 他其時就指向該資料的原型，如圖：<br><img src="https://i.imgur.com/td2VUJN.png" alt="`更新後的 [[Prototype]] 原型`"></p>
-<p>在過去 JavaScript 並沒有明確規範瀏覽器要如何製作原型這個功能，因此大部分瀏覽器都採用  <code>__proto__</code> 製做原型，不過後面 ECMAScript 有規範，要使用 <code>[[Prototype]]</code>  來製作原型功能。</p>
-<p>不過這時大多瀏覽器已經使用  <code>__proto__</code>  的方式製作原型，因此  <code>[[Prototype]]</code>  則是在後續瀏覽器更新，才陸續被實做上去，不過 <code>[[Prototype]]</code> 、<code>__proto__</code> 都是指原型。</p>
-<p>也因此你可以看到過去介紹原型文章、影片中資料的原型都會是 <code>__proto__</code> 而非 <code>[[Prototype]]</code> ，這就是之前瀏覽器尚未更新原型部分的關係，如圖：<br><img src="https://i.imgur.com/SJsu342.png" alt="更新前的 __proto__ 原型"></p>
-<p>而最近 Chrome 瀏覽器更新， <code>__proto__</code> 則替換成 <code>[[Prototype]]</code> ，但為了避免過去使用 <code>__proto__</code> 開發的網站無法正確運作，因此仍保留 <code>__proto__</code> 方法，關於這部分 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#%E7%B9%BC%E6%89%BF%E5%B1%AC%E6%80%A7">MDN 文件</a>有詳細的說明。</p>
-<p>過去可以使用 <code>__proto__</code> 製作原型的方法，如下面範例</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.__proto__.getLast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> thsi[<span class="built_in">this</span>.length - <span class="number">1</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a.getLast)</span><br></pre></td></tr></table></figure>
-<p>這種 <code>__proto__</code> 其實不屬於正規 JavaScript 的，他算是瀏覽器建立的方法，也因此實務上都不太會看到這種寫法，不過 Chrome 更新後仍可以支援這種寫法，而正規的原型方法，如：建構函式、 class 等等的對於這個更新使用上也沒有任何差別。</p>
-<p>還有一點要特別提的是，目前 Chrome 雖然不確定是什麼原因，不過最底兩層的原型仍會是 <code>__proto__</code> ，如圖<br><img src="https://i.imgur.com/3oXce3h.png"></p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><p>而 <code>prototype</code> 則是 正規的 JavaScript 原型方法，在為建構函式新增方法時、原型製作多層串接時，也都會使用這個方法，詳細使用<a href="https://rider159159.github.io/2021/10/03/JS-core/(Day20)%20Object.create%20%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%B1%A4%E7%B9%BC%E6%89%BF/">過去鐵人賽文章</a>有介紹過。</p>
-<h2 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#%E7%B9%BC%E6%89%BF%E5%B1%AC%E6%80%A7">MDN 文件</a></li>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>製作網頁時圖片一直是不可少的元素，不過有時我們使用的圖片會因為圖庫網站掛掉、CORS、網址填錯 等等因素導致圖片無法正確顯示，而原生的 JavaScript 其實就有辦法做到，圖片如果無法正確顯示那麼使用替換圖片的功能。</p>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h3><p>上述的圖片檢查並替換的功能，其中的核心就是 <code>new Image()</code> 這個作法其實時就是讓 JavaScript 動態產生一個圖片元素，而 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image">MDN 文件</a> 說明更為直接，直接指出</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myImage = <span class="keyword">new</span> Image(<span class="number">100</span>, <span class="number">200</span>);</span><br><span class="line">myImage.src = <span class="string">&#x27;picture.jpg&#x27;</span>;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(myImage);</span><br></pre></td></tr></table></figure>
+<p>上面程式碼，其實就等同於下面 img HTML 的寫法。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img width=<span class="string">&quot;100&quot;</span> height=<span class="string">&quot;200&quot;</span> src=<span class="string">&quot;picture.jpg&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>而最重要的是 <code>new Image()</code> 這個功能，還可以透過 <code>complete</code> 這個屬性來檢查圖片是否載入完成，這邊可以直接看範例：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="圖片替換 img" src="https://codepen.io/rider159159/embed/MWvmXoa?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/rider159159/pen/MWvmXoa">
+  圖片替換 img</a> by tien (<a target="_blank" rel="noopener" href="https://codepen.io/rider159159">@rider159159</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>上面範例中有五張圖片，前面四張都是能夠正確顯示（貓貓），最後一張刻意將網址打錯，經由 <code>image.complete</code> 判斷，因為圖片無法載入，變使用預設圖片（可愛的狗勾）來將無法顯示的圖片作替換，上述範例是針對 <code>img</code> 標籤圖片作替換的，那麼想替換 <code>background-image</code> 中的圖片是否有辦法？<br>結果當然是有辦法的，實際作法和上面雷同，不過會使用 <code>split()</code> 方法將圖片網址取出，再使用 <code>complete</code> 判斷，比如以下範例</p>
+ <iframe height="300" style="width: 100%;" scrolling="no" title="圖片替換 background-image" src="https://codepen.io/rider159159/embed/oNeWvpd?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/rider159159/pen/oNeWvpd">
+  圖片替換 background-image</a> by tien (<a target="_blank" rel="noopener" href="https://codepen.io/rider159159">@rider159159</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>值得一提的是上面範例中有使用到 <code>image.onload</code> 這個方法，這個方法是在圖片正確載入後會被執行，以上面範例來說確實可以不用添加，但如果有需要對正確載入的圖片做一些事，則可以使用到這個方法。</p>
+<h3 id="參考文獻"><a href="#參考文獻" class="headerlink" title="參考文獻"></a>參考文獻</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://otischou.tw/notes/2017/01/01/detect-is-image-loaded.html">圖片到底載入了沒？</a></li>
+<li><a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/javascript/20201222/2162934013/">該如何知道圖片載入完成沒?</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image">MDN 文件</a></li>
 </ul>
 
     </div>
@@ -295,15 +309,15 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-              <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
+              <a href="/tags/JavaScript-Tips/" rel="tag"># JavaScript Tips</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/03/JS-core/(Day30)%20-%20%E7%9B%AE%E9%8C%84%E8%88%87%E5%AE%8C%E7%B5%90%E5%BF%83%E5%BE%97/" rel="prev" title="(Day30) - 目錄與完結心得">
-                  <i class="fa fa-chevron-left"></i> (Day30) - 目錄與完結心得
+                <a href="/2021/10/06/JS-core/%5B%5BPrototype%5D%5D%20%E3%80%81__proto__%20%E3%80%81%20prototype%20%E4%B8%89%E8%80%85%E5%B7%AE%E7%95%B0/" rel="prev" title="[[Prototype]] 、__proto__ 、 prototype 三者差異">
+                  <i class="fa fa-chevron-left"></i> [[Prototype]] 、__proto__ 、 prototype 三者差異
                 </a>
             </div>
             <div class="post-nav-item">
