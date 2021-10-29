@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;rider159159.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:&quot;disqus&quot;,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null,&quot;activeClass&quot;:&quot;disqus&quot;},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜尋...&quot;,&quot;empty&quot;:&quot;我們無法找到任何有關 ${query} 的搜索結果&quot;,&quot;hits_time&quot;:&quot;${hits} 找到 ${time} 個結果&quot;,&quot;hits&quot;:&quot;找到 ${hits} 個結果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="Firebase 更新速度一直以來都是非常的快，每次大改版都會有部分語法更動，V8 升至 V9 主要是改成 ESM 方式引入，除此之外也有部分語法更改，雖然 Firebase 文件寫的滿詳細的，但這邊還是記錄一下 V9 版本的 Realtime Database 一些常用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 串接 FireBase V9 &#x2F; Realtime Database 基本語法使用">
+<meta property="og:url" content="https://rider159159.github.io/2021/10/29/Firebase/JS-%E4%B8%B2%E6%8E%A5-FireBase-V9-Realtime-Database-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="地方的工程師需要筆記">
+<meta property="og:description" content="Firebase 更新速度一直以來都是非常的快，每次大改版都會有部分語法更動，V8 升至 V9 主要是改成 ESM 方式引入，除此之外也有部分語法更改，雖然 Firebase 文件寫的滿詳細的，但這邊還是記錄一下 V9 版本的 Realtime Database 一些常用方法。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/PkJnStM.png">
+<meta property="article:published_time" content="2021-10-29T08:23:31.000Z">
+<meta property="article:modified_time" content="2021-10-29T08:35:25.867Z">
+<meta property="article:author" content="Ryder">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Firebase">
+<meta property="article:tag" content="Realtime Database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/PkJnStM.png">
+
+
+<link rel="canonical" href="https://rider159159.github.io/2021/10/29/Firebase/JS-%E4%B8%B2%E6%8E%A5-FireBase-V9-Realtime-Database-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-TW&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;rider159159.github.io&#x2F;2021&#x2F;10&#x2F;29&#x2F;Firebase&#x2F;JS-%E4%B8%B2%E6%8E%A5-FireBase-V9-Realtime-Database-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E4%BD%BF%E7%94%A8&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;10&#x2F;29&#x2F;Firebase&#x2F;JS-串接-FireBase-V9-Realtime-Database-基本語法使用&#x2F;&quot;,&quot;title&quot;:&quot;JS 串接 FireBase V9 &#x2F; Realtime Database 基本語法使用&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>JS 串接 FireBase V9 / Realtime Database 基本語法使用 | 地方的工程師需要筆記</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">地方的工程師需要筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Ryder 的 Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%92%B0%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">初始化環境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FireBase-Realtime-Database-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">FireBase  Realtime Database 的一些基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">3.1.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">3.2.</span> <span class="nav-text">get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update"><span class="nav-number">3.3.</span> <span class="nav-text">update()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#child"><span class="nav-number">3.4.</span> <span class="nav-text">child()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on"><span class="nav-number">3.5.</span> <span class="nav-text">on()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E5%B0%BE"><span class="nav-number">4.</span> <span class="nav-text">結尾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ryder"
+      src="https://i.imgur.com/bou6XJo.png">
+  <p class="site-author-name" itemprop="name">Ryder</p>
+  <div class="site-description" itemprop="description">Ryder 的 Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://rider159159.github.io/2021/10/29/Firebase/JS-%E4%B8%B2%E6%8E%A5-FireBase-V9-Realtime-Database-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.imgur.com/bou6XJo.png">
+      <meta itemprop="name" content="Ryder">
+      <meta itemprop="description" content="Ryder 的 Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地方的工程師需要筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS 串接 FireBase V9 / Realtime Database 基本語法使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-10-29 16:23:31 / 修改時間：16:35:25" itemprop="dateCreated datePublished" datetime="2021-10-29T16:23:31+08:00">2021-10-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Firebase/" itemprop="url" rel="index"><span itemprop="name">Firebase</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/10/29/Firebase/JS-%E4%B8%B2%E6%8E%A5-FireBase-V9-Realtime-Database-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E4%BD%BF%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/29/Firebase/JS-串接-FireBase-V9-Realtime-Database-基本語法使用/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">Firebase 更新速度一直以來都是非常的快，每次大改版都會有部分語法更動，V8 升至 V9 主要是改成 ESM 方式引入，除此之外也有部分語法更改，雖然 Firebase 文件寫的滿詳細的，但這邊還是記錄一下 V9 版本的 Realtime Database 一些常用方法。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Firebase 更新速度一直以來都是非常的快，每次大改版都會有部分語法更動，V8 升至 V9 主要是改成 ESM 方式引入，除此之外也有部分語法更改，雖然 Firebase 文件寫的滿詳細的，但這邊還是記錄一下 V9 版本的 Realtime Database 一些常用方法。</p>
+<h2 id="初始化環境"><a href="#初始化環境" class="headerlink" title="初始化環境"></a>初始化環境</h2><ul>
+<li>進入 <a target="_blank" rel="noopener" href="https://console.firebase.google.com/">FireBase 首頁</a>，在此建立一個新專案。</li>
+<li>新增專案後，可以選擇開啟一個應用程式，這邊選擇 Web 版本。</li>
+<li>在開啟應用程式第二步驟時，會提供 NPM 以及 CDN 的資訊，但先別複製，開啟好應用程式後，還需要開啟 <strong>Realtime Database</strong> 資料庫，到時候會在一起附上 CDN。</li>
+<li>應用程式開啟完畢後，點左邊的 <strong>Realtime Database</strong> ，來開啟一個資料庫，跟專案、應用程式一樣會要你填名稱，並選擇伺服器，個人是選 『新加坡 (asia-southeast1)』 因為我們離該伺服器最近。</li>
+<li>資料庫也開好後，Firebase 的操作差不多到這裡，接者就是複製 CDN，選擇左上齒輪 ⇒ 專案設定，裡面就有 NPM 、 CDN 資料了。</li>
+<li>NPM 比較適合有 Webpack 等等有包裝的環境，這邊採取 CDN 方式引入，9 版 CDN 是長這樣：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the functions you need from the SDKs you need</span></span><br><span class="line">    <span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> Add SDKs for Firebase products that you want to use</span></span><br><span class="line">    <span class="comment">// https://firebase.google.com/docs/web/setup#available-libraries</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Your web app&#x27;s Firebase configuration</span></span><br><span class="line">    <span class="comment">// 避免一些資料外露，把 Config  值刪除</span></span><br><span class="line">    <span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">      <span class="attr">apiKey</span>: </span><br><span class="line">      authDomain:</span><br><span class="line">      databaseURL: </span><br><span class="line">      projectId:</span><br><span class="line">      storageBucket:</span><br><span class="line">      messagingSenderId: </span><br><span class="line">      appId: </span><br><span class="line">    &#125;;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize Firebase</span></span><br><span class="line">    <span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>但由於我們會使用到 Firebase 資料庫因此要再多一個 CDN ，以及一個相關設定，這樣就完成了初始化 Firebase 環境設定：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the functions you need from the SDKs you need</span></span><br><span class="line">    <span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> Add SDKs for Firebase products that you want to use</span></span><br><span class="line">    <span class="comment">// https://firebase.google.com/docs/web/setup#available-libraries</span></span><br><span class="line">    <span class="keyword">import</span> &#123; getDatabase &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Your web app&#x27;s Firebase configuration</span></span><br><span class="line">    <span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">      <span class="attr">apiKey</span>: </span><br><span class="line">      authDomain:</span><br><span class="line">      databaseURL: </span><br><span class="line">      projectId:</span><br><span class="line">      storageBucket:</span><br><span class="line">      messagingSenderId: </span><br><span class="line">      appId: </span><br><span class="line">    &#125;;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize Firebase</span></span><br><span class="line">    <span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line">    <span class="keyword">const</span> db = getDatabase();</span><br></pre></td></tr></table></figure>
+
+<h2 id="FireBase-Realtime-Database-的一些基本方法"><a href="#FireBase-Realtime-Database-的一些基本方法" class="headerlink" title="FireBase  Realtime Database 的一些基本方法"></a>FireBase  <strong>Realtime Database</strong> 的一些基本方法</h2><ul>
+<li>這邊會介紹的有 <code>set()</code> 、 <code>get()</code> 、<code>update()</code> 、<code>child()</code>、<code>on()</code> 這幾個基本且常用方法</li>
+<li>在介紹上面方法前，先說明 Firebase 一個功能 <code>ref()</code> ，<code>ref()</code> 是指向伺服器資料路徑的方法，在上面方法都會使用到。</li>
+</ul>
+<h3 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h3><ul>
+<li><code>set()</code> 功能是直接將使用者的資料寫入進 FireBase 的資料庫中，需要帶上兩個參數一個是資料路徑，另一個就是要寫資料本身，這邊以 <code>familyObj</code>  為要寫入的物件</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line"><span class="comment">// 由於採用 ESM 會使用的方法都要自己取出</span></span><br><span class="line"><span class="keyword">import</span> &#123; getDatabase, ref, set&#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">  <span class="attr">apiKey</span>: </span><br><span class="line">  authDomain:</span><br><span class="line">  databaseURL: </span><br><span class="line">  projectId:</span><br><span class="line">  storageBucket:</span><br><span class="line">  messagingSenderId: </span><br><span class="line">  appId: </span><br><span class="line">&#125;;    </span><br><span class="line"><span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line"><span class="keyword">const</span> db = getDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指向資料庫中 屬性是 family 的物件</span></span><br><span class="line"><span class="keyword">const</span> familyRef = ref(db, <span class="string">&#x27;family&#x27;</span>)</span><br><span class="line"><span class="comment">// 自定義物件</span></span><br><span class="line"><span class="keyword">const</span> familyObj = &#123;</span><br><span class="line">  <span class="attr">father</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;jack&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="string">&#x27;42&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">mother</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;rose&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="string">&#x27;39&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">child</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Alex&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="string">&#x27;18&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// set 設置</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setFN</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  set(familyRef, familyObj);</span><br><span class="line">&#125;</span><br><span class="line">setFN()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>執行  <code>setFN()</code> 後，切到 firebase 網站中的 <strong>Realtime Database</strong> 就會發現 familyObj 的物件確實會被寫入，要注意的是資料庫中 familyObj  的名稱是  family 而非 familyObj   ，因為我們在 ref 設定的屬性名稱是 <strong>family 。</strong></li>
+</ul>
+<p><img src="https://i.imgur.com/PkJnStM.png" alt="Image"></p>
+<h3 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h3><ul>
+<li><code>get()</code> 顧名思義，獲得資料庫中資料，需要帶上一個參數，指向資料庫中的資料，這邊使用 <code>.then()</code> 接回回傳資料</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDatabase, ref, get &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">  <span class="attr">apiKey</span>: </span><br><span class="line">  authDomain:</span><br><span class="line">  databaseURL: </span><br><span class="line">  projectId:</span><br><span class="line">  storageBucket:</span><br><span class="line">  messagingSenderId: </span><br><span class="line">  appId: </span><br><span class="line">&#125;;    </span><br><span class="line"><span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line"><span class="keyword">const</span> db = getDatabase();</span><br><span class="line"><span class="keyword">const</span> familyRef = ref(db, <span class="string">&#x27;family&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFN</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// get 設置</span></span><br><span class="line">    get(familyRef).then(<span class="function">(<span class="params">snapshot</span>)=&gt;</span>&#123;</span><br><span class="line">			<span class="comment">// 確認回傳資料是否成功</span></span><br><span class="line">      <span class="keyword">if</span> (snapshot.exists()) &#123;</span><br><span class="line">				<span class="comment">// 顯示回傳資料</span></span><br><span class="line">        <span class="built_in">console</span>.log(snapshot.val()) <span class="comment">//family 物件</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  getFN()</span><br></pre></td></tr></table></figure>
+
+<h3 id="update"><a href="#update" class="headerlink" title="update()"></a>update()</h3><ul>
+<li><code>update()</code> 顧名思義是更新，同樣會帶上兩個參數，一個是資料路徑，另一個就是要更新的資料本身，使用起來和 <code>set()</code> 類似。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDatabase, ref, child, update &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">  <span class="attr">apiKey</span>: </span><br><span class="line">  authDomain:</span><br><span class="line">  databaseURL: </span><br><span class="line">  projectId:</span><br><span class="line">  storageBucket:</span><br><span class="line">  messagingSenderId: </span><br><span class="line">  appId: </span><br><span class="line">&#125;;    </span><br><span class="line"><span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line"><span class="keyword">const</span> db = getDatabase();</span><br><span class="line"><span class="keyword">const</span> familyRef = ref(db, <span class="string">&#x27;family&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateFn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  update(child(familyRef,<span class="string">&#x27;mother&#x27;</span>), &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Ruby&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="string">&#x27;40&#x27;</span>,</span><br><span class="line">    <span class="attr">gender</span>:<span class="string">&#x27;female&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">updateFn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="child"><a href="#child" class="headerlink" title="child()"></a>child()</h3><ul>
+<li>在上面範例中，會發現有用上 <code>child()</code> 方法，<code>child()</code> 方法就是指向資料庫物件中，指定屬性的方法，以範例來說就是指向，資料庫中 family 中的 mother  屬性。</li>
+</ul>
+<h3 id="on"><a href="#on" class="headerlink" title="on()"></a>on()</h3><ul>
+<li><code>on()</code> 是用來持續監聽資料使用的，一旦指定的資料在資料庫中替換， <code>on()</code> 設定的資料便會重新回傳，在過去版本 <code>on()</code>  也都會是獨立的方法，但是在 V9 版本被改為使用 <code>onValue</code> 這類監聽方法，同時搭配第三個參數  <code>&#123; on : true &#125;</code> ，這樣才會開啟</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; initializeApp &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getDatabase, onValue &#125; <span class="keyword">from</span> <span class="string">&quot;https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> firebaseConfig = &#123;</span><br><span class="line">  <span class="attr">apiKey</span>: </span><br><span class="line">  authDomain:</span><br><span class="line">  databaseURL: </span><br><span class="line">  projectId:</span><br><span class="line">  storageBucket:</span><br><span class="line">  messagingSenderId: </span><br><span class="line">  appId: </span><br><span class="line">&#125;;    </span><br><span class="line"><span class="keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line"><span class="keyword">const</span> db = getDatabase();</span><br><span class="line"><span class="keyword">const</span> familyRef = ref(db, <span class="string">&#x27;family&#x27;</span>)</span><br><span class="line"></span><br><span class="line">onValue(familyRef, <span class="function">(<span class="params">snapshot</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> value = snapshot.val()</span><br><span class="line">      <span class="built_in">console</span>(value)</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      <span class="attr">on</span>: <span class="literal">true</span></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上面範例輸入後，我們可以到 firebase  <strong>Realtime Database</strong> 資料庫，隨意修改 family 中的資料，可以發現只要修改的是 family 中的資料，他便會回傳 console.log 便會顯示。</li>
+</ul>
+<h2 id="結尾"><a href="#結尾" class="headerlink" title="結尾"></a>結尾</h2><ul>
+<li>其實這些方法在<a target="_blank" rel="noopener" href="https://firebase.google.com/docs/reference/js/database">官方文件</a> 都有提到，更多方可以直接參考官方文件。</li>
+<li>上面程式碼也提供一個 <a target="_blank" rel="noopener" href="https://codepen.io/rider159159/pen/qBXXNBP">Codepen</a> 參考，不過仍須自行填入自己的 firebaseConfig</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>firebase <a target="_blank" rel="noopener" href="https://firebase.google.com/docs/reference/js/database">官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BOITPwChVP4&list=LL&index=2&ab_channel=TACV-TheAmazingCode-Verse">READ, WRITE, UPDATE, DELETE Data | Firebase Realtime Database v9.1 | JavaScript</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/Firebase/" rel="tag"># Firebase</a>
+              <a href="/tags/Realtime-Database/" rel="tag"># Realtime Database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/26/JS-tips/%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%88%A4%E6%96%B7%E4%BB%A5%E5%8F%8A%E5%9C%96%E7%89%87%E6%9B%BF%E4%BB%A3%E5%8A%9F%E8%83%BD/" rel="prev" title="圖片載入判斷以及圖片替代功能">
+                  <i class="fa fa-chevron-left"></i> 圖片載入判斷以及圖片替代功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  <script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="disqus" type="application/json">{&quot;enable&quot;:true,&quot;shortname&quot;:&quot;RyderBlog&quot;,&quot;count&quot;:true,&quot;i18n&quot;:{&quot;disqus&quot;:&quot;disqus&quot;}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
